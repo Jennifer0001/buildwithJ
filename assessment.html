@@ -573,7 +573,7 @@
       <div class="brand-tagline">StructPath</div>
     </div>
     <div class="header-actions">
-      <a class="header-link" href="roadmap_rewrite.html">Career map</a>
+      <a class="header-link" href="index.html">Career map</a>
       <div class="header-badge">Assessment v3.0</div>
     </div>
   </header>
@@ -1447,7 +1447,7 @@
         </div>
 
         <div class="actions-row">
-          <a class="btn" href="roadmap_rewrite.html#${report.track.roadmapKey}">Open recommended roadmap →</a>
+          <a class="btn" href="index.html#${report.track.roadmapKey}">Open recommended roadmap →</a>
           <button class="btn secondary" onclick="window.print()">Print or save report</button>
           <button class="btn secondary" onclick="downloadSummary()">Download summary</button>
           <button class="btn secondary" onclick="restartAssessment()">Start over</button>
@@ -1472,7 +1472,7 @@
             <div class="roadmap-steps">
               ${nav.steps.map((step, index) => `<div class="roadmap-step"><span>${index + 1}</span><div>${step}</div></div>`).join("")}
             </div>
-            <a class="btn" href="roadmap_rewrite.html#${key}">Open my roadmap →</a>
+            <a class="btn" href="index.html#${key}">Open my roadmap →</a>
           </div>
         </div>
       `;
@@ -1553,7 +1553,7 @@
         "================================",
         `Profile: ${report.archetype.name}`,
         `Recommended track: ${report.track.name}`,
-        `Roadmap link: roadmap_rewrite.html#${report.track.roadmapKey}`,
+        `Roadmap link: index.html#${report.track.roadmapKey}`,
         "",
         "Scores:",
         ...Object.entries(report.scores).map(([cat, score]) => `- ${CATEGORY_DEFINITIONS[cat].label}: ${score}% (${CATEGORY_DEFINITIONS[cat].bands[getBandKey(score)].label})`),
