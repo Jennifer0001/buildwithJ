@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StructPath — Structural Engineering Career Assessment</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #0f172a;
+      --ink-2: #334155;
+      --ink-3: #64748b;
+      --paper: #f8fafc;
+      --paper-2: #eff6ff;
+      --paper-3: #dbeafe;
+      --white: #ffffff;
+      --blue-deep: #1e3a8a;
+      --blue: #2563eb;
+      --blue-soft: #eff6ff;
+      --sky: #0ea5e9;
+      --green: #0f766e;
+      --purple: #7c3aed;
+      --amber: #d97706;
+      --red: #dc2626;
+      --border: rgba(37, 99, 235, 0.16);
+      --border-strong: rgba(37, 99, 235, 0.30);
+      --shadow: 0 18px 55px rgba(30, 58, 138, 0.11);
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(37, 99, 235, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37, 99, 235, 0.07) 1px, transparent 1px),
+        radial-gradient(circle at 18% 10%, rgba(14,165,233,.18), transparent 27%),
+        radial-gradient(circle at 85% 5%, rgba(37,99,235,.16), transparent 30%);
+      background-size: 42px 42px, 42px 42px, auto, auto;
+      z-index: 0;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem clamp(1rem, 3vw, 2rem);
+      background: rgba(248, 250, 252, 0.92);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(14px);
+    }
+
+    .brand-block { display: flex; flex-direction: column; line-height: 1; }
+
+    .logo {
+      font-weight: 900;
+      letter-spacing: -0.045em;
+      font-size: 1.6rem;
+      color: var(--blue-deep);
+    }
+
+    .logo span { color: var(--ink); font-style: italic; }
+
+    .brand-tagline {
+      margin-top: 0.32rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      font-weight: 900;
+    }
+
+    .logo span { color: var(--blue); font-style: italic; }
+
+    .brand-tagline {
+      margin-top: 0.28rem;
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      font-weight: 800;
+    }
+
+    .header-actions { display: flex; align-items: center; gap: .65rem; }
+
+    .header-badge,
+    .header-link {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: white;
+      background: var(--blue-deep);
+      padding: 0.42rem 0.7rem;
+      border-radius: 999px;
+      white-space: nowrap;
+      font-weight: 850;
+      text-decoration: none;
+    }
+
+    .header-link { background: var(--blue); }
+    .header-link:hover { background: var(--blue-deep); }
+
+    .progress-rail {
+      position: sticky;
+      top: 65px;
+      z-index: 19;
+      height: 4px;
+      background: var(--paper-3);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--blue), var(--sky));
+      transition: width 0.25s ease;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: clamp(2rem, 4vw, 4rem) 1rem 5rem;
+    }
+
+    .hero-shell {
+      border: 1px solid rgba(37,99,235,.18);
+      border-radius: 32px;
+      background:
+        radial-gradient(circle at 20% 15%, rgba(14,165,233,.22), transparent 30%),
+        radial-gradient(circle at 88% 12%, rgba(37,99,235,.22), transparent 28%),
+        linear-gradient(135deg, #0f172a, #172554 58%, #1e3a8a);
+      color: white;
+      box-shadow: 0 28px 80px rgba(15,23,42,.22);
+      padding: clamp(1.4rem, 5vw, 3.4rem);
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-shell::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, black, transparent 82%);
+      pointer-events: none;
+    }
+
+    .hero { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; text-align: center; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      color: #bfdbfe;
+      font-size: 0.74rem;
+      font-weight: 850;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.08);
+      border-radius: 999px;
+      padding: .42rem .75rem;
+    }
+
+    h1 {
+      font-size: clamp(2.25rem, 7vw, 5rem);
+      line-height: 0.98;
+      letter-spacing: -0.07em;
+      margin-bottom: 1.2rem;
+    }
+
+    h1 em {
+      font-style: normal;
+      background: linear-gradient(90deg, #93c5fd, #ffffff, #38bdf8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      max-width: 720px;
+      margin: 0 auto 1.6rem;
+      color: rgba(255,255,255,.82);
+      font-size: 1.04rem;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.6rem;
+      margin: 1.5rem 0 2rem;
+    }
+
+    .pill {
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255, 255, 255, 0.09);
+      border-radius: 999px;
+      padding: 0.45rem 0.75rem;
+      color: #dbeafe;
+      font-size: 0.84rem;
+      font-weight: 750;
+    }
+
+    button { font: inherit; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      border: 1px solid var(--blue-deep);
+      border-radius: var(--radius-sm);
+      background: var(--blue-deep);
+      color: white;
+      padding: 0.82rem 1.25rem;
+      font-weight: 850;
+      cursor: pointer;
+      transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+      text-decoration: none;
+    }
+
+    .hero .btn { border-color: #60a5fa; background: var(--blue); }
+    .btn:hover { transform: translateY(-1px); background: var(--blue); border-color: var(--blue); }
+    .hero .btn:hover { background: #1d4ed8; }
+
+    .btn.secondary {
+      background: white;
+      color: var(--blue-deep);
+      border-color: var(--border-strong);
+    }
+
+    .btn.secondary:hover { background: var(--blue-soft); border-color: var(--blue); }
+
+    .btn:disabled { opacity: 0.42; cursor: not-allowed; transform: none; }
+
+    .intro-cards {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: .8rem;
+      margin-top: 1.4rem;
+    }
+
+    .intro-card {
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.08);
+      border-radius: 18px;
+      padding: .95rem;
+      text-align: left;
+    }
+
+    .intro-card strong { display: block; color: white; font-size: .86rem; margin-bottom: .25rem; }
+    .intro-card span { display: block; color: rgba(219,234,254,.78); font-size: .76rem; line-height: 1.45; }
+
+    .panel {
+      background: rgba(255, 255, 255, 0.86);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    #assessment-container, #result-screen { display: none; }
+
+    .section-head {
+      padding: clamp(1.25rem, 3vw, 2rem);
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(135deg, rgba(239,246,255,.95), rgba(255,255,255,.90));
+    }
+
+    .section-topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 0.45rem;
+    }
+
+    .section-num {
+      font-weight: 900;
+      color: var(--blue);
+      letter-spacing: 0.09em;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+    }
+
+    .section-count { font-size: 0.78rem; color: var(--ink-3); font-weight: 800; }
+
+    .section-title {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      line-height: 1.15;
+      letter-spacing: -0.04em;
+      font-weight: 950;
+      margin-bottom: 0.35rem;
+      color: var(--blue-deep);
+    }
+
+    .section-sub { color: var(--ink-3); max-width: 700px; }
+
+    .questions-wrap { padding: clamp(1rem, 3vw, 2rem); }
+
+    .question-block { padding: 1.15rem 0; border-bottom: 1px solid var(--border); }
+    .question-block:first-child { padding-top: 0; }
+    .question-block:last-child { border-bottom: 0; }
+
+    .q-label {
+      display: flex;
+      gap: 0.6rem;
+      color: var(--ink);
+      font-weight: 850;
+      margin-bottom: 0.8rem;
+      line-height: 1.35;
+    }
+
+    .q-num {
+      flex: 0 0 auto;
+      color: var(--blue);
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      margin-top: 0.13rem;
+    }
+
+    .q-help { display: block; color: var(--ink-3); font-weight: 500; font-size: 0.88rem; margin-top: 0.25rem; }
+
+    .options-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.65rem; }
+    .options-grid.single-col { grid-template-columns: 1fr; }
+
+    .option-card {
+      display: flex;
+      gap: 0.7rem;
+      align-items: flex-start;
+      min-height: 74px;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius);
+      background: rgba(248, 250, 252, 0.86);
+      padding: 0.82rem;
+      cursor: pointer;
+      transition: border-color 0.14s ease, background 0.14s ease, transform 0.14s ease, box-shadow .14s ease;
+    }
+
+    .option-card:hover { border-color: var(--blue); background: var(--blue-soft); transform: translateY(-1px); }
+    .option-card.selected { border-color: var(--blue); background: #dbeafe; box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.22); }
+
+    .option-check {
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid var(--border-strong);
+      border-radius: 999px;
+      margin-top: 0.12rem;
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      background: white;
+    }
+
+    .option-card.selected .option-check { border-color: var(--blue); background: var(--blue); }
+    .option-card.selected .option-check::after { content: ""; width: 7px; height: 7px; border-radius: 999px; background: white; }
+
+    .option-text strong { display: block; font-size: 0.92rem; line-height: 1.3; }
+    .option-text span { display: block; color: var(--ink-3); font-size: 0.82rem; margin-top: 0.2rem; }
+
+    .scale-wrap { padding: 0.15rem 0 0.2rem; }
+    .scale-labels { display: flex; justify-content: space-between; gap: 1rem; color: var(--ink-3); font-size: 0.8rem; margin-bottom: 0.45rem; font-weight: 700; }
+    input[type="range"] { width: 100%; accent-color: var(--blue); cursor: pointer; }
+    .scale-value { display: inline-block; margin-top: 0.3rem; color: var(--blue); font-weight: 900; font-size: 0.84rem; }
+
+    .chips-wrap { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+
+    .chip {
+      border: 1px solid var(--border-strong);
+      border-radius: 999px;
+      background: rgba(248, 250, 252, 0.86);
+      color: var(--ink);
+      padding: 0.48rem 0.72rem;
+      font-size: 0.84rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.14s ease;
+    }
+
+    .chip:hover { border-color: var(--blue); background: var(--blue-soft); }
+    .chip.selected { background: var(--blue-deep); color: white; border-color: var(--blue-deep); }
+
+    .notice {
+      display: none;
+      margin: 1rem 0 0;
+      border: 1px solid rgba(220, 38, 38, 0.25);
+      background: #fef2f2;
+      color: #991b1b;
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 0.9rem;
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+
+    .nav-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: clamp(1rem, 3vw, 1.6rem) clamp(1rem, 3vw, 2rem);
+      border-top: 1px solid var(--border);
+      background: rgba(239, 246, 255, 0.72);
+    }
+
+    .loading-screen { display: none; text-align: center; padding: 4rem 1rem; }
+    .loader-ring { width: 52px; height: 52px; margin: 0 auto 1.25rem; border-radius: 999px; border: 4px solid var(--paper-3); border-top-color: var(--blue); animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-screen h2 { letter-spacing: -0.04em; margin-bottom: 0.3rem; color: var(--blue-deep); }
+    .loading-screen p { color: var(--ink-3); }
+
+    .result-hero {
+      background:
+        radial-gradient(circle at 88% 12%, rgba(14,165,233,.26), transparent 28%),
+        linear-gradient(135deg, #0f172a, #172554 60%, #1e3a8a);
+      color: white;
+      border-radius: 28px;
+      padding: clamp(1.35rem, 4vw, 2.4rem);
+      margin-bottom: 1.2rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 25px 70px rgba(15,23,42,.18);
+    }
+
+    .result-hero .eyebrow { color: #bfdbfe; margin-bottom: 0.65rem; }
+    .result-title { font-size: clamp(1.7rem, 5vw, 3.2rem); line-height: 1; letter-spacing: -0.06em; font-weight: 950; margin-bottom: 0.65rem; }
+    .result-summary { color: rgba(255,255,255,.78); max-width: 740px; }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 1rem; }
+    .tag { border: 1px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.09); color: #dbeafe; border-radius: 999px; padding: 0.32rem 0.58rem; font-weight: 850; font-size: 0.78rem; }
+
+    .result-grid { display: grid; gap: 1rem; }
+
+    .result-card {
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.88);
+      box-shadow: 0 10px 34px rgba(30, 58, 138, 0.065);
+      padding: clamp(1rem, 3vw, 1.45rem);
+    }
+
+    .result-card h2 {
+      font-size: 0.82rem;
+      color: var(--blue);
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      margin-bottom: 0.9rem;
+    }
+
+    .track-card { display: grid; grid-template-columns: 56px 1fr; gap: 1rem; align-items: start; }
+    .track-icon { width: 56px; height: 56px; display: grid; place-items: center; border-radius: 16px; background: var(--blue-soft); font-size: 1.65rem; }
+    .track-name { font-size: 1.2rem; font-weight: 950; letter-spacing: -0.03em; margin-bottom: 0.25rem; color: var(--blue-deep); }
+    .track-why { color: var(--ink-2); }
+    .timeline { display: inline-block; margin-top: 0.65rem; color: var(--blue); background: rgba(37,99,235,0.08); padding: 0.32rem 0.5rem; border-radius: 999px; font-size: 0.78rem; font-weight: 900; }
+
+    .roadmap-nav-card {
+      border: 1px solid rgba(37,99,235,.22);
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(239,246,255,.98), rgba(255,255,255,.96));
+      padding: 1.15rem;
+      display: grid;
+      gap: .9rem;
+    }
+
+    .roadmap-nav-top { display: grid; grid-template-columns: 54px 1fr; gap: 1rem; align-items: start; }
+    .roadmap-icon { width: 54px; height: 54px; border-radius: 16px; background: var(--blue-deep); color: white; display: grid; place-items: center; font-size: 1.5rem; }
+    .roadmap-title { font-weight: 950; color: var(--blue-deep); font-size: 1.18rem; letter-spacing: -.03em; }
+    .roadmap-desc { color: var(--ink-2); font-size: .92rem; margin-top: .25rem; }
+    .roadmap-steps { display: grid; gap: .55rem; }
+    .roadmap-step { display: grid; grid-template-columns: 28px 1fr; gap: .55rem; color: var(--ink-2); font-size: .9rem; }
+    .roadmap-step span:first-child { width: 28px; height: 28px; border-radius: 999px; background: var(--paper-3); color: var(--blue-deep); display: grid; place-items: center; font-weight: 950; font-size: .72rem; }
+
+    .score-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.9rem; }
+    .category-card { border: 1px solid var(--border); border-radius: 18px; padding: 1rem; background: rgba(248,250,252,0.86); }
+    .category-top { display: flex; justify-content: space-between; gap: 1rem; align-items: flex-start; margin-bottom: 0.65rem; }
+    .category-name { font-weight: 950; letter-spacing: -0.03em; line-height: 1.2; }
+    .category-score { font-weight: 950; font-size: 1.45rem; line-height: 1; }
+    .bar { height: 9px; background: var(--paper-3); border-radius: 999px; overflow: hidden; margin: 0.75rem 0; }
+    .bar-fill { height: 100%; border-radius: inherit; width: 0%; transition: width 1s ease; }
+    .band-label { display: inline-block; font-size: 0.76rem; font-weight: 900; border-radius: 999px; padding: 0.25rem 0.5rem; margin-bottom: 0.55rem; }
+    .category-meaning { color: var(--ink-2); font-size: 0.9rem; margin-bottom: 0.7rem; }
+    .action-list { list-style: none; display: grid; gap: 0.4rem; }
+    .action-list li { position: relative; padding-left: 1.1rem; color: var(--ink-2); font-size: 0.88rem; }
+    .action-list li::before { content: "→"; position: absolute; left: 0; color: var(--blue); font-weight: 900; }
+    .action-list a { color: var(--blue); font-weight: 850; text-decoration: none; }
+
+    .alerts { display: grid; gap: 0.75rem; }
+    .alert-card { border: 1px solid rgba(220,38,38,0.22); border-left: 5px solid var(--red); background: #fef2f2; border-radius: 14px; padding: 0.9rem 1rem; }
+    .alert-card strong { display: block; margin-bottom: 0.25rem; color: #991b1b; }
+    .alert-card p { color: #7f1d1d; font-size: 0.92rem; }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .mini-box { border: 1px solid var(--border); background: rgba(248,250,252,0.86); border-radius: 16px; padding: 1rem; }
+    .mini-box h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.65rem; }
+    .mini-box ul { list-style: none; display: grid; gap: 0.45rem; }
+    .mini-box li { color: var(--ink-2); font-size: 0.9rem; position: relative; padding-left: 1.05rem; }
+    .mini-box li::before { position: absolute; left: 0; font-weight: 900; }
+    .strengths h3 { color: var(--green); }
+    .strengths li::before { content: "✓"; color: var(--green); }
+    .gaps h3 { color: var(--red); }
+    .gaps li::before { content: "→"; color: var(--red); }
+
+    .steps { display: grid; gap: 0.78rem; }
+    .step-card { display: grid; grid-template-columns: 42px 1fr; gap: 0.85rem; align-items: start; border: 1px solid var(--border); border-radius: 16px; background: rgba(248,250,252,0.86); padding: 0.92rem; }
+    .step-num { width: 42px; height: 42px; border-radius: 999px; display: grid; place-items: center; font-size: 0.8rem; font-weight: 950; }
+    .step-card h3 { font-size: 1rem; letter-spacing: -0.025em; line-height: 1.25; margin-bottom: 0.2rem; }
+    .step-card p { color: var(--ink-2); font-size: 0.91rem; }
+    .priority { display: inline-block; margin-top: 0.5rem; font-size: 0.74rem; font-weight: 900; border-radius: 999px; padding: 0.25rem 0.48rem; }
+
+    .resource-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+    .resource-item { border: 1px solid var(--border); border-radius: 16px; background: rgba(248,250,252,0.86); padding: 0.9rem; }
+    .resource-type { display: inline-block; font-size: 0.72rem; font-weight: 950; letter-spacing: 0.06em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.3rem; }
+    .resource-item strong { display: block; line-height: 1.25; }
+    .resource-item span:last-child { display: block; color: var(--ink-3); font-size: 0.86rem; margin-top: 0.25rem; }
+
+    .disclaimer { color: var(--ink-3); font-size: 0.84rem; border-top: 1px solid var(--border); margin-top: 1rem; padding-top: 1rem; }
+    .actions-row { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; margin-top: 1.25rem; }
+
+    @media (max-width: 780px) {
+      .intro-cards { grid-template-columns: 1fr 1fr; }
+      .options-grid, .score-grid, .two-col, .resource-grid { grid-template-columns: 1fr; }
+      .site-header { align-items: flex-start; }
+      .header-actions { flex-direction: column; align-items: flex-end; gap: .4rem; }
+      .header-badge, .header-link { font-size: 0.64rem; }
+      .nav-row { flex-direction: column-reverse; }
+      .btn { width: 100%; }
+      .track-card, .roadmap-nav-top { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 540px) {
+      .intro-cards { grid-template-columns: 1fr; }
+      .hero { text-align: left; }
+      .hero-meta { justify-content: flex-start; }
+    }
+
+    @media print {
+      .site-header, .progress-rail, .actions-row { display: none !important; }
+      body { background: white; }
+      main { max-width: 100%; padding: 0; }
+      .result-card, .result-hero { break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand-block">
+      <div class="logo">Build with Jay</div>
+      <div class="brand-tagline">StructPath</div>
+    </div>
+    <div class="header-actions">
+      <a class="header-link" href="roadmap_rewrite.html">Career map</a>
+      <div class="header-badge">Assessment v3.0</div>
+    </div>
+  </header>
+
+  <div class="progress-rail"><div class="progress-fill" id="progress-fill"></div></div>
+
+  <main>
+    <section class="hero-shell" id="hero-section">
+      <div class="hero">
+        <div class="eyebrow">Civil & Structural Engineering Career Roadmap</div>
+        <h1>Find your next <em>professional step</em>.</h1>
+        <p>
+          A practical StructPath assessment that scores your current position across structural analysis,
+          site/construction exposure, software proficiency, project management, and professional standing.
+          Your result links directly to the career roadmap you should follow first.
+        </p>
+        <div class="hero-meta">
+          <span class="pill">⏱ 8–10 minutes</span>
+          <span class="pill">31 targeted questions</span>
+          <span class="pill">No API key required</span>
+          <span class="pill">Roadmap linked</span>
+        </div>
+        <button class="btn" onclick="startAssessment()">Begin assessment →</button>
+      </div>
+      <div class="intro-cards">
+        <div style="grid-column: 1 / -1; text-align:center; margin-bottom:0.8rem;">
+          <a href="#" class="btn" style="background:#0ea5e9; border-color:#38bdf8;">Join the StructPath Channel →</a>
+          <p style="color:#dbeafe; font-size:0.8rem; margin-top:0.4rem;">Get weekly engineering roadmaps, real project breakdowns, and career guidance.</p>
+        </div>
+        <div class="intro-card"><strong>Clear diagnosis</strong><span>See your strongest and weakest engineering categories.</span></div>
+        <div class="intro-card"><strong>Career-led</strong><span>Results recommend a path, not generic motivation.</span></div>
+        <div class="intro-card"><strong>Practical actions</strong><span>Each score band gives specific next steps.</span></div>
+        <div class="intro-card"><strong>Connected roadmap</strong><span>Open the right StructPath map from your result.</span></div>
+      </div>
+    </section>
+
+    <section id="assessment-container" class="panel">
+      <div id="questions-screen"></div>
+      <div id="loading-screen" class="loading-screen">
+        <div class="loader-ring"></div>
+        <h2>Building your roadmap…</h2>
+        <p>Scoring your categories and matching your gaps to recommended next steps.</p>
+      </div>
+    </section>
+
+    <section id="result-screen"></section>
+  </main>
+
+  <script>
+    const CATEGORY_DEFINITIONS = {
+      structural: {
+        label: "Structural Analysis",
+        shortLabel: "Structural",
+        color: "#2563eb",
+        description: "Your ability to understand load paths, design structural members, use codes correctly, and document calculations.",
+        bands: makeBands("structural analysis", [
+          "Rebuild fundamentals: load paths, actions, bending, shear, deflection, stability, and basic detailing.",
+          "Complete two RC design case studies with load takedown, member design, foundation checks, and review notes.",
+          "Package 3–5 projects into a design portfolio with assumptions, calculations, model screenshots, and drawings."
+        ])
+      },
+      site: {
+        label: "Site & Construction",
+        shortLabel: "Site",
+        color: "#0ea5e9",
+        description: "Your exposure to real construction, supervision, QA/QC, site coordination, safety, and buildability.",
+        bands: makeBands("site and construction", [
+          "Arrange regular site exposure and keep a log with photos, sketches, inspections, and lessons learned.",
+          "Practise pre-pour checks, reinforcement inspection, concrete records, RFIs, NCRs, and daily reports.",
+          "Own a supervised work package with quality, programme, safety, subcontractor coordination, and close-out evidence."
+        ])
+      },
+      software: {
+        label: "Software Proficiency",
+        shortLabel: "Software",
+        color: "#0f766e",
+        description: "Your ability to use engineering software responsibly, check outputs, organise models, and produce usable deliverables.",
+        bands: makeBands("software proficiency", [
+          "Choose one core path first: ETABS, ProtaStructure, STAAD.Pro, SAP2000, Tekla Structures, Revit, Prokon, or Excel sheets.",
+          "Complete one full workflow from model setup to loads, design checks, output review, drawings/reports, and manual verification.",
+          "Build a model audit portfolio showing screenshots, assumptions, load combinations, checks, corrections, and deliverables."
+        ])
+      },
+      project: {
+        label: "Project Management",
+        shortLabel: "Project Management",
+        color: "#7c3aed",
+        description: "Your ability to plan work, communicate, manage risk, coordinate teams, and control delivery.",
+        bands: makeBands("project management", [
+          "Start with basic delivery discipline: task tracker, issue log, meeting notes, deadlines, and action owners.",
+          "Own a small deliverable and track scope, blockers, decisions, risks, revisions, and close-out items.",
+          "Lead package-level coordination with cost, time, quality, risk, procurement, and stakeholder communication visible."
+        ])
+      },
+      professional: {
+        label: "Professional Standing",
+        shortLabel: "Professional Standing",
+        color: "#1e40af",
+        description: "Your progress with registration, mentorship, portfolio evidence, CPD, ethics, and professional visibility.",
+        bands: makeBands("professional standing", [
+          "Start a professional evidence folder: CV, project log, calculations, drawings, site reports, certificates, and CPD notes.",
+          "Find a senior engineer or mentor who can review your work and guide your registration evidence.",
+          "Build visibility through portfolio proof, professional events, CPD notes, mentoring, and responsible technical sharing."
+        ])
+      }
+    };
+
+    function makeBands(name, actions) {
+      return {
+        critical: {
+          label: "0–35% · Critical foundation gap",
+          meaning: `Your ${name} foundation is critically weak. You need immediate structured rebuilding before depending on this area professionally.`,
+          actions: [actions[0], actions[1], actions[2]]
+        },
+        below: {
+          label: "35–50% · Below target",
+          meaning: `Your ${name} is below target. This category is weak and needs a structured improvement plan, not random tutorials.`,
+          actions: [actions[0], actions[1], actions[2]]
+        },
+        basic: {
+          label: "50–60% · Basic competence",
+          meaning: `You have basic competence in ${name}, but it needs consolidation, consistency, and better evidence.`,
+          actions: [actions[1], actions[0], actions[2]]
+        },
+        developing: {
+          label: "60–80% · Developing strength",
+          meaning: `You are building useful strength in ${name}. Now move into more advanced practice and review discipline.`,
+          actions: [actions[1], actions[2], actions[0]]
+        },
+        strong: {
+          label: "80–90% · Strong competence",
+          meaning: `You have strong competence in ${name}. Your next step is proof, refinement, and portfolio evidence.`,
+          actions: [actions[2], actions[1], "Mentor or support a junior engineer while documenting your review process."]
+        },
+        advanced: {
+          label: "90–100% · Advanced strength",
+          meaning: `You have advanced strength in ${name}. Your growth should shift toward leadership, mentoring, systems, and professional visibility.`,
+          actions: ["Lead reviews, share lessons, and create reusable standards or templates.", actions[2], "Build professional visibility through CPD sessions, case studies, or mentoring."]
+        }
+      };
+    }
+
+    const TRACKS = {
+      structural_design: {
+        name: "Structural Design Consultant Track",
+        roadmapKey: "design",
+        icon: "📐",
+        timeline: "6–18 months to a stronger design portfolio",
+        why: "This route fits engineers who want stronger analysis, reinforced concrete, steel, foundations, modelling, calculation documentation, and design review confidence."
+      },
+      site_delivery: {
+        name: "Site & Construction Leadership Track",
+        roadmapKey: "site",
+        icon: "🦺",
+        timeline: "3–12 months to stronger site responsibility",
+        why: "This route fits engineers who want to lead construction work, coordinate trades, control quality, and convert drawings into safe, buildable work."
+      },
+      oilgas: {
+        name: "Oil & Gas / EPC Structural Track",
+        roadmapKey: "oilgas",
+        icon: "🛢️",
+        timeline: "6–24 months to an EPC-ready portfolio",
+        why: "This route fits engineers targeting steel-heavy industrial structures, pipe racks, equipment supports, refinery, LNG, offshore, fabrication, and EPC environments."
+      },
+      digital_bim: {
+        name: "Digital Design, BIM & Modelling Track",
+        roadmapKey: "digital",
+        icon: "💻",
+        timeline: "4–12 months to portfolio-ready models",
+        why: "This route fits engineers who want to combine structural judgement with ETABS, ProtaStructure, Tekla Structures, STAAD.Pro, SAP2000, Revit, Prokon, Excel, and digital workflows."
+      },
+      project_leadership: {
+        name: "Project Management / Delivery Leadership Track",
+        roadmapKey: "pm",
+        icon: "📊",
+        timeline: "6–18 months to package-level leadership",
+        why: "This route fits engineers aiming to manage teams, deadlines, quality, cost, risk, contract communication, and client coordination."
+      },
+      professional_foundation: {
+        name: "Professional Standing & Career Mobility Track",
+        roadmapKey: "career",
+        icon: "🏅",
+        timeline: "30–90 days to a structured professional plan",
+        why: "This route fits engineers whose main blocker is lack of structure, mentorship, registration planning, portfolio evidence, or professional visibility."
+      },
+      independent_practice: {
+        name: "Independent Practice Preparation Track",
+        roadmapKey: "career",
+        icon: "🏢",
+        timeline: "12–24 months before responsible independent positioning",
+        why: "This route fits engineers who want to freelance or run a practice, but must first build professional standing, review systems, QA discipline, and ethical limits."
+      }
+    };
+
+    const ROADMAP_GUIDANCE = {
+      design: {
+        title: "Open the Design Consultant roadmap",
+        desc: "Follow Foundation Core first if your structural score is weak, then move through design office readiness, modelling verification, and advanced consulting proof.",
+        steps: ["Start with Foundation Core if Structural Analysis is below 60%.", "Follow Design Consultant Years 0–1, then Years 1–3.", "Add Digital/BIM or Professional Standing once you have project evidence."]
+      },
+      site: {
+        title: "Open the Site & Construction roadmap",
+        desc: "Use this route to build inspection discipline, QA/QC records, RFIs, planning, subcontractor control, and project engineer evidence.",
+        steps: ["Strengthen drawing reading and site inspection basics.", "Follow Site Years 0–1, then Years 1–3.", "Branch into PM when you start owning packages."]
+      },
+      oilgas: {
+        title: "Open the Oil & Gas / EPC roadmap",
+        desc: "Use this route for steel-heavy industrial structures, STAAD.Pro, pipe racks, equipment supports, HSE culture, and EPC portfolio positioning.",
+        steps: ["Build advanced steel and industrial load foundations.", "Create a pipe rack + equipment support mini portfolio.", "Target EPC firms, fabrication yards, oil servicing, refinery and offshore-related roles."]
+      },
+      digital: {
+        title: "Open the Digital / BIM roadmap",
+        desc: "Use this route for modelling, BIM coordination, software QA, model audit portfolios, automation, and digital engineering workflows.",
+        steps: ["Pick one main software lane first, then build depth.", "Complete one full workflow with manual checks.", "Package screenshots, assumptions, checks, corrections and deliverables into a portfolio."]
+      },
+      pm: {
+        title: "Open the Project Management roadmap",
+        desc: "Use this route for planning, reporting, cost awareness, contracts, stakeholder coordination, risk control, and delivery leadership.",
+        steps: ["Keep enough technical/site literacy to manage engineering risk.", "Build task, risk, decision and issue trackers.", "Own a small package before aiming for project-wide responsibility."]
+      },
+      career: {
+        title: "Open the Professional Standing roadmap",
+        desc: "Use this route for COREN/NSE evidence, mentorship, CPD, portfolio proof, professional visibility, ethics, and responsible independent practice readiness.",
+        steps: ["Start a weekly evidence log.", "Get senior review on calculations, drawings, reports, or site evidence.", "Build a portfolio around proof, not claims."]
+      }
+    };
+
+    const SECTIONS = [
+      {
+        id: "direction",
+        label: "01",
+        title: "Professional direction",
+        sub: "Tell StructPath where you are now and where you want to go professionally.",
+        questions: [
+          {
+            id: "career_stage",
+            label: "Where are you in your engineering journey?",
+            type: "options",
+            options: [
+              { value: "student", label: "Final-year student", sub: "Still in school or completing final project" },
+              { value: "nysc", label: "NYSC / service year", sub: "Currently serving or just completed service" },
+              { value: "fresh", label: "Fresh graduate", sub: "0–2 years after NYSC" },
+              { value: "early", label: "Early-career engineer", sub: "2–5 years of experience" },
+              { value: "mid", label: "Mid-level engineer", sub: "5+ years, seeking sharper direction" }
+            ],
+            trackInfluence: { student: "professional_foundation", nysc: "professional_foundation", fresh: "professional_foundation", early: "structural_design", mid: "project_leadership" }
+          },
+          {
+            id: "current_environment",
+            label: "What best describes your current work or learning environment?",
+            type: "options",
+            options: [
+              { value: "structured_firm", label: "Structured firm", sub: "Mentors, reviews, and project systems exist", scores: { professional: 80, project: 70 } },
+              { value: "small_firm", label: "Small firm / mixed exposure", sub: "Learning happens, but systems are not consistent", scores: { professional: 55, project: 50 } },
+              { value: "site_based", label: "Mostly site-based", sub: "Construction exposure is stronger than design exposure", scores: { site: 72, project: 55 } },
+              { value: "self_directed", label: "Self-directed", sub: "Mostly learning alone or freelancing", scores: { professional: 35, project: 35 } },
+              { value: "between_roles", label: "Between roles", sub: "Actively looking for a better opportunity", scores: { professional: 30, project: 25 } }
+            ]
+          },
+          {
+            id: "desired_destination",
+            label: "What professional destination are you trying to reach next?",
+            help: "Choose the route you most want, even if you are far from it today.",
+            type: "options",
+            cols: 1,
+            options: [
+              { value: "design_lead", label: "Become a strong structural design engineer", sub: "Design calculations, drawings, code checks, and review responsibility" },
+              { value: "site_manager", label: "Become a site/project delivery leader", sub: "Construction supervision, QA/QC, programme, and coordination" },
+              { value: "software_bim", label: "Become strong in structural software / BIM", sub: "ETABS, ProtaStructure, Tekla, STAAD.Pro, SAP2000, Revit, Prokon, Excel" },
+              { value: "oilgas", label: "Enter oil & gas / EPC structural work", sub: "Steel, pipe racks, equipment supports, refinery, offshore and HSE culture" },
+              { value: "own_practice", label: "Prepare for freelancing or my own practice", sub: "Professional credibility, client delivery, ethics, and review systems" },
+              { value: "international", label: "Position myself for international opportunities", sub: "Portfolio, standards, documentation, and professional visibility" },
+              { value: "unsure", label: "I am not sure yet", sub: "I need a route that clarifies my next best step" }
+            ],
+            trackInfluence: { design_lead: "structural_design", site_manager: "site_delivery", software_bim: "digital_bim", oilgas: "oilgas", own_practice: "independent_practice", international: "professional_foundation", unsure: "professional_foundation" }
+          },
+          {
+            id: "biggest_barrier",
+            label: "What is your biggest barrier right now?",
+            type: "options",
+            cols: 1,
+            options: [
+              { value: "technical", label: "My technical design foundation is weak", sub: "I need better understanding of design, codes, and calculations" },
+              { value: "site", label: "I lack real site/construction exposure", sub: "I need to understand how work is built" },
+              { value: "software", label: "My software skill is weak", sub: "I need to learn modern engineering tools properly" },
+              { value: "management", label: "I struggle with planning, reporting, or coordination", sub: "I need delivery discipline and communication systems" },
+              { value: "professional", label: "I lack mentors, registration clarity, or professional network", sub: "I need a stronger professional structure" }
+            ],
+            trackInfluence: { technical: "structural_design", site: "site_delivery", software: "digital_bim", management: "project_leadership", professional: "professional_foundation" }
+          },
+          {
+            id: "time_available",
+            label: "How much focused development time can you commit each week?",
+            type: "options",
+            options: [
+              { value: "low", label: "1–3 hours", sub: "Very limited time" },
+              { value: "moderate", label: "4–7 hours", sub: "Consistent evenings or weekends" },
+              { value: "strong", label: "8–15 hours", sub: "Serious structured growth time" },
+              { value: "intense", label: "15+ hours", sub: "Full focus mode" }
+            ]
+          }
+        ]
+      },
+      {
+        id: "technical",
+        label: "02",
+        title: "Structural technical foundation",
+        sub: "These questions measure whether you can reason through structural problems, not only operate software.",
+        questions: [
+          scaleQ("load_path", "How well can you explain load paths from slab to foundation?", "structural", 1.15, "Not yet", "Very clearly"),
+          scaleQ("rc_design", "Reinforced concrete design: slabs, beams, columns, and foundations", "structural", 1.25, "Just starting", "Can design/check independently"),
+          scaleQ("steel_design", "Steel design: tension, compression, bending, connections, and stability", "structural", 0.9, "Just starting", "Confident"),
+          scaleQ("foundation_design", "Foundation and geotechnical design judgement", "structural", 0.95, "Very weak", "Strong practical judgement"),
+          scaleQ("code_confidence", "Confidence using design codes and checking clauses", "structural", 1.05, "Rarely use codes", "Use codes confidently"),
+          scaleQ("calc_documentation", "Quality of your calculation notes and design documentation", "structural", 0.9, "Scattered", "Review-ready")
+        ]
+      },
+      {
+        id: "site",
+        label: "03",
+        title: "Site & construction exposure",
+        sub: "Good engineers connect calculations to what happens on site.",
+        questions: [
+          {
+            id: "site_experience",
+            label: "How much real site experience do you have?",
+            type: "options",
+            options: [
+              { value: "none", label: "None yet", sub: "Only classroom or online exposure", scores: { site: 5 } },
+              { value: "visits", label: "Site visits only", sub: "Observed but did not carry responsibility", scores: { site: 30 } },
+              { value: "supervised", label: "Supervised experience", sub: "SIWES, NYSC, internship, or junior site role", scores: { site: 58 } },
+              { value: "responsible", label: "Responsible site role", sub: "Handled inspections, reports, or coordination", scores: { site: 78, project: 60 } },
+              { value: "lead", label: "Led site/package work", sub: "Owned quality, coordination, or delivery outcomes", scores: { site: 92, project: 85 } }
+            ]
+          },
+          chipsQ("site_tasks", "Which site activities have you personally participated in?", "Select every activity where you did more than just watch casually.", "site", [
+            ["None yet", 0], ["Setting out / levels", 16], ["Reinforcement inspection", 18], ["Formwork inspection", 14], ["Concrete pour supervision", 18], ["Foundation excavation / blinding", 14], ["Daily site reports", 12], ["Snagging / defect tracking", 12], ["Client or contractor meetings", 14], ["QA/QC documentation", 16]
+          ]),
+          scaleQ("drawing_interpretation", "Can you read structural drawings and explain them clearly to site workers or colleagues?", "site", 1.0, "Not confidently", "Very confidently"),
+          scaleQ("qaqc", "How familiar are you with QA/QC records, concrete tests, inspection requests, and site instructions?", "site", 0.9, "Not familiar", "Very familiar"),
+          scaleQ("hse_buildability", "How well do you consider safety, buildability, and sequence before recommending solutions?", "site", 0.85, "Rarely", "Always")
+        ]
+      },
+      {
+        id: "software",
+        label: "04",
+        title: "Software proficiency",
+        sub: "This section checks tool familiarity and responsible model-checking behaviour.",
+        questions: [
+          chipsQ("software_tools", "Which tools have you used on actual learning or project tasks?", "Select the tools you have used beyond simply watching a video.", "software", [
+            ["None yet", 0], ["AutoCAD", 12], ["Excel engineering sheets", 16], ["ETABS", 18], ["SAP2000", 14], ["STAAD.Pro", 16], ["ProtaStructure", 18], ["Prokon", 14], ["Revit", 14], ["Tekla Structures", 18], ["Primavera P6 / MS Project", 10], ["Python / VBA / automation", 10]
+          ]),
+          {
+            id: "software_depth",
+            label: "What is your current software depth?",
+            type: "options",
+            cols: 1,
+            options: [
+              { value: "none", label: "I have not used engineering software meaningfully", sub: "I need a starting path", scores: { software: 5 } },
+              { value: "tutorial", label: "I follow tutorials but struggle alone", sub: "I can copy steps but cannot diagnose problems", scores: { software: 32 } },
+              { value: "simple_project", label: "I can complete simple models or drawings", sub: "Basic independent ability in one or two tools", scores: { software: 55 } },
+              { value: "full_workflow", label: "I can complete a full workflow and check outputs", sub: "Model, loads, analysis, checks, detailing/reporting, and corrections", scores: { software: 76 } },
+              { value: "review", label: "I can review models and guide others", sub: "Strong quality-control ability", scores: { software: 92 } }
+            ]
+          },
+          scaleQ("excel_level", "How strong are your Excel calculation and checking sheets?", "software", 0.95, "Very weak", "Strong and organised"),
+          scaleQ("model_checking", "How consistently do you check software output manually?", "software", 1.1, "Rarely", "Always"),
+          scaleQ("bim_coordination", "How comfortable are you coordinating drawings/models with architecture or other disciplines?", "software", 0.75, "Not comfortable", "Very comfortable")
+        ]
+      },
+      {
+        id: "management",
+        label: "05",
+        title: "Project management & delivery",
+        sub: "This measures whether you can move from doing tasks to controlling outcomes.",
+        questions: [
+          scaleQ("planning", "How well do you plan tasks, deadlines, and dependencies before starting work?", "project", 1.0, "Poorly", "Very well"),
+          scaleQ("reporting", "How clearly do you write reports, meeting notes, site updates, or design review comments?", "project", 0.95, "Weak", "Clear and professional"),
+          scaleQ("coordination", "How well do you coordinate with architects, contractors, clients, or other engineers?", "project", 1.05, "Avoid it", "Confident"),
+          scaleQ("cost_awareness", "How much do you consider cost, quantities, procurement, and programme impact?", "project", 0.85, "Rarely", "Consistently"),
+          {
+            id: "leadership",
+            label: "Have you led people, a package of work, or a defined deliverable?",
+            type: "options",
+            options: [
+              { value: "none", label: "No leadership yet", sub: "I mostly receive tasks", scores: { project: 18 } },
+              { value: "small_tasks", label: "Small tasks", sub: "I have coordinated a few simple items", scores: { project: 40 } },
+              { value: "deliverable", label: "Defined deliverable", sub: "I owned a calculation, drawing set, report, or inspection close-out", scores: { project: 62 } },
+              { value: "package", label: "Work package", sub: "I coordinated people, time, and quality", scores: { project: 82 } },
+              { value: "team", label: "Team/project leadership", sub: "I led multiple people or a project section", scores: { project: 94 } }
+            ]
+          }
+        ]
+      },
+      {
+        id: "professional",
+        label: "06",
+        title: "Professional standing",
+        sub: "Professional growth is also registration, mentorship, evidence, ethics, and visibility.",
+        questions: [
+          {
+            id: "coren_status",
+            label: "Where are you on professional registration planning?",
+            type: "options",
+            cols: 1,
+            options: [
+              { value: "not_started", label: "I have not started or I do not understand the path", sub: "No clear registration plan", scores: { professional: 10 } },
+              { value: "researching", label: "I am researching the requirements", sub: "I know it matters but have not structured evidence", scores: { professional: 35 } },
+              { value: "graduate_member", label: "I have started a graduate/professional pathway", sub: "Some registration or membership action has started", scores: { professional: 58 } },
+              { value: "active_record", label: "I am actively recording experience and getting guidance", sub: "Evidence and supervision are being built", scores: { professional: 76 } },
+              { value: "registered_or_near", label: "I am registered or close to formal professional review", sub: "Strong professional structure", scores: { professional: 92 } }
+            ]
+          },
+          {
+            id: "nse_network",
+            label: "How active is your professional network?",
+            type: "options",
+            options: [
+              { value: "none", label: "No real network", sub: "I am mostly alone", scores: { professional: 12 } },
+              { value: "few_contacts", label: "A few contacts", sub: "Some classmates or colleagues", scores: { professional: 38 } },
+              { value: "branch_events", label: "I attend events sometimes", sub: "NSE, alumni, webinars, or technical groups", scores: { professional: 60 } },
+              { value: "active", label: "Active network", sub: "Mentors, peers, referrals, and events", scores: { professional: 78 } },
+              { value: "visible", label: "Professionally visible", sub: "People know my work and call me for opportunities", scores: { professional: 92 } }
+            ]
+          },
+          scaleQ("mentor_access", "Do you have a senior engineer who reviews your work and gives practical guidance?", "professional", 1.05, "No mentor", "Strong mentor support"),
+          scaleQ("portfolio", "How strong is your evidence portfolio: CV, project log, calculations, drawings, reports, certificates?", "professional", 1.15, "No portfolio", "Review-ready portfolio"),
+          scaleQ("cpd", "How consistent is your continuing professional development?", "professional", 0.85, "Random", "Consistent and recorded")
+        ]
+      }
+    ];
+
+    function scaleQ(id, label, category, weight, minText, maxText) {
+      return { id, label, type: "scale", category, weight, minText, maxText };
+    }
+
+    function chipsQ(id, label, help, category, pairs) {
+      return {
+        id,
+        label,
+        help,
+        type: "chips",
+        category,
+        maxScore: 100,
+        exclusive: "None yet",
+        options: pairs.map(([label, points]) => ({ label, points }))
+      };
+    }
+
+    const RESOURCES = {
+      structural: [
+        { type: "Practice", name: "30-day RC design portfolio sprint", note: "Week 1: load takedown. Week 2: slab/beam design. Week 3: column/foundation checks. Week 4: package the calculation report." },
+        { type: "Study", name: "Manual checks before software confidence", note: "For every model, check reactions, load paths, member forces, and reinforcement assumptions by hand before trusting output." }
+      ],
+      site: [
+        { type: "Practice", name: "Site learning log", note: "Record inspections, sketches, defects, photos, test results, and the exact correction made." },
+        { type: "Checklist", name: "QA/QC inspection routine", note: "Start with reinforcement, formwork, concrete pour, cube test records, site instructions, and daily reports." }
+      ],
+      software: [
+        { type: "Tool", name: "ETABS / ProtaStructure / STAAD.Pro / SAP2000 pathway", note: "Pick one analysis tool first. Complete one full model and document assumptions, screenshots, load combinations, checks, and corrections." },
+        { type: "Tool", name: "Tekla Structures / Revit detailing and BIM workflow", note: "Use these when your target is steel detailing, rebar detailing, BIM coordination, fabrication-ready modelling, or drawing production." },
+        { type: "Tool", name: "Excel engineering calculation sheets", note: "Build checking sheets for beams, slabs, columns, and foundations so software output does not replace engineering judgement." }
+      ],
+      project: [
+        { type: "System", name: "Weekly delivery tracker", note: "Track scope, tasks, owners, due dates, blockers, drawing revisions, RFIs, risks, and close-out actions in one simple sheet." },
+        { type: "Skill", name: "Professional reporting practice", note: "Write reports that state what happened, why it matters, decision needed, owner, deadline, and next action." }
+      ],
+      professional: [
+        { type: "Body", name: "COREN and NSE pathway check", note: "Confirm registration and membership requirements directly from official sources. Keep receipts, certificates, and experience evidence." },
+        { type: "Mentorship", name: "Monthly senior engineer review", note: "Take one calculation, drawing, site report, or project log to a senior engineer every month and record corrections." },
+        { type: "Portfolio", name: "LinkedIn / PDF project evidence portfolio", note: "Show project type, your role, tools used, engineering decisions, checks performed, and lessons learned without exposing confidential data." }
+      ]
+    };
+
+    let currentSectionIndex = 0;
+    const answers = {};
+    const allQuestions = SECTIONS.flatMap(section => section.questions.map(q => ({ ...q, sectionId: section.id })));
+
+    function startAssessment() {
+      document.getElementById("hero-section").style.display = "none";
+      document.getElementById("assessment-container").style.display = "block";
+      renderSection(0);
+      updateProgress();
+    }
+
+    function renderSection(index, scrollToTop = true) {
+      currentSectionIndex = index;
+      const section = SECTIONS[index];
+      const screen = document.getElementById("questions-screen");
+      const isLast = index === SECTIONS.length - 1;
+      const sectionQuestions = section.questions.map(q => renderQuestion(q)).join("");
+
+      screen.innerHTML = `
+        <div class="section-head">
+          <div class="section-topline">
+            <div class="section-num">Section ${section.label}</div>
+            <div class="section-count">${index + 1} of ${SECTIONS.length}</div>
+          </div>
+          <div class="section-title">${section.title}</div>
+          <div class="section-sub">${section.sub}</div>
+          <div class="notice" id="section-notice">Please answer every question in this section before continuing.</div>
+        </div>
+        <div class="questions-wrap">${sectionQuestions}</div>
+        <div class="nav-row">
+          <button class="btn secondary" onclick="goBack()" ${index === 0 ? "style='visibility:hidden'" : ""}>← Back</button>
+          <button class="btn" onclick="${isLast ? "submitAssessment()" : "goNext()"}">${isLast ? "Generate my roadmap →" : "Next section →"}</button>
+        </div>
+      `;
+
+      if (scrollToTop) window.scrollTo({ top: 0, behavior: "smooth" });
+      updateProgress();
+    }
+
+    function renderQuestion(q) {
+      const number = allQuestions.findIndex(item => item.id === q.id) + 1;
+      const help = q.help ? `<span class="q-help">${q.help}</span>` : "";
+      let inputHtml = "";
+
+      if (q.type === "options") {
+        const gridClass = q.cols === 1 ? "options-grid single-col" : "options-grid";
+        inputHtml = `<div class="${gridClass}">${q.options.map(opt => {
+          const selected = answers[q.id] === opt.value ? "selected" : "";
+          return `<div class="option-card ${selected}" onclick="selectOption('${q.id}', '${opt.value}')">
+            <div class="option-check"></div>
+            <div class="option-text"><strong>${opt.label}</strong>${opt.sub ? `<span>${opt.sub}</span>` : ""}</div>
+          </div>`;
+        }).join("")}</div>`;
+      }
+
+      if (q.type === "scale") {
+        if (!answers[q.id]) answers[q.id] = 3;
+        inputHtml = `
+          <div class="scale-wrap">
+            <div class="scale-labels"><span>${q.minText}</span><span>${q.maxText}</span></div>
+            <input type="range" min="1" max="5" step="1" value="${answers[q.id]}" oninput="updateScale('${q.id}', this.value)" />
+            <span class="scale-value" id="scale-${q.id}">${scaleLabel(Number(answers[q.id]))}</span>
+          </div>
+        `;
+      }
+
+      if (q.type === "chips") {
+        const selectedValues = answers[q.id] || [];
+        inputHtml = `<div class="chips-wrap">${q.options.map(opt => {
+          const label = typeof opt === "string" ? opt : opt.label;
+          const selected = selectedValues.includes(label) ? "selected" : "";
+          return `<button type="button" class="chip ${selected}" onclick="toggleChip('${q.id}', '${escapeAttribute(label)}')">${label}</button>`;
+        }).join("")}</div>`;
+      }
+
+      return `
+        <div class="question-block" id="block-${q.id}">
+          <div class="q-label"><span class="q-num">Q${String(number).padStart(2, "0")}</span><span>${q.label}${help}</span></div>
+          ${inputHtml}
+        </div>
+      `;
+    }
+
+    function escapeAttribute(value) { return String(value).replace(/'/g, "&#39;"); }
+
+    function scaleLabel(value) {
+      const labels = { 1: "1 · Critical gap", 2: "2 · Below target", 3: "3 · Basic competence", 4: "4 · Developing strength", 5: "5 · Strong / advanced" };
+      return labels[value] || String(value);
+    }
+
+    function selectOption(questionId, value) {
+      answers[questionId] = value;
+      renderSection(currentSectionIndex, false);
+      updateProgress();
+    }
+
+    function updateScale(questionId, value) {
+      answers[questionId] = Number(value);
+      const label = document.getElementById(`scale-${questionId}`);
+      if (label) label.textContent = scaleLabel(Number(value));
+      updateProgress();
+    }
+
+    function toggleChip(questionId, rawValue) {
+      const value = rawValue.replace(/&#39;/g, "'");
+      const question = allQuestions.find(q => q.id === questionId);
+      if (!answers[questionId]) answers[questionId] = [];
+
+      if (question.exclusive && value === question.exclusive) {
+        answers[questionId] = answers[questionId].includes(value) ? [] : [value];
+      } else {
+        answers[questionId] = answers[questionId].filter(item => item !== question.exclusive);
+        if (answers[questionId].includes(value)) {
+          answers[questionId] = answers[questionId].filter(item => item !== value);
+        } else {
+          answers[questionId].push(value);
+        }
+      }
+      renderSection(currentSectionIndex, false);
+      updateProgress();
+    }
+
+    function isAnswered(q) {
+      if (q.type === "chips") return Array.isArray(answers[q.id]) && answers[q.id].length > 0;
+      return answers[q.id] !== undefined && answers[q.id] !== null && answers[q.id] !== "";
+    }
+
+    function validateCurrentSection() {
+      const section = SECTIONS[currentSectionIndex];
+      const missing = section.questions.filter(q => !isAnswered(q));
+      const notice = document.getElementById("section-notice");
+      if (missing.length) {
+        if (notice) notice.style.display = "block";
+        const first = document.getElementById(`block-${missing[0].id}`);
+        if (first) first.scrollIntoView({ behavior: "smooth", block: "center" });
+        return false;
+      }
+      if (notice) notice.style.display = "none";
+      return true;
+    }
+
+    function goNext() {
+      if (!validateCurrentSection()) return;
+      renderSection(currentSectionIndex + 1);
+    }
+
+    function goBack() {
+      if (currentSectionIndex > 0) renderSection(currentSectionIndex - 1);
+    }
+
+    function updateProgress() {
+      const answeredCount = allQuestions.filter(q => isAnswered(q)).length;
+      const percent = Math.round((answeredCount / allQuestions.length) * 100);
+      document.getElementById("progress-fill").style.width = `${percent}%`;
+    }
+
+    function submitAssessment() {
+      if (!validateCurrentSection()) return;
+      document.getElementById("questions-screen").style.display = "none";
+      document.getElementById("loading-screen").style.display = "block";
+      document.getElementById("progress-fill").style.width = "100%";
+      setTimeout(() => {
+        const report = buildReport();
+        document.getElementById("assessment-container").style.display = "none";
+        showResult(report);
+      }, 650);
+    }
+
+    function buildReport() {
+      const scores = calculateScores();
+      const primaryTrackKey = chooseTrack(scores);
+      const track = TRACKS[primaryTrackKey];
+      const sortedCategories = Object.keys(scores).sort((a, b) => scores[a] - scores[b]);
+      const topCategories = Object.keys(scores).sort((a, b) => scores[b] - scores[a]);
+      return {
+        scores,
+        primaryTrackKey,
+        track,
+        archetype: buildArchetype(primaryTrackKey, scores),
+        weakCategories: sortedCategories.filter(cat => scores[cat] < 50),
+        strongestCategories: topCategories.slice(0, 2),
+        focusCategories: sortedCategories.slice(0, 3),
+        destinationGap: buildDestinationGap(scores),
+        nextSteps: buildNextSteps(scores, primaryTrackKey),
+        resources: buildResources(scores, primaryTrackKey)
+      };
+    }
+
+    function calculateScores() {
+      const totals = {};
+      const maxes = {};
+      Object.keys(CATEGORY_DEFINITIONS).forEach(cat => { totals[cat] = 0; maxes[cat] = 0; });
+
+      allQuestions.forEach(q => {
+        const answer = answers[q.id];
+        if (q.type === "scale" && q.category) {
+          const weight = q.weight || 1;
+          const score = ((Number(answer) - 1) / 4) * 100;
+          totals[q.category] += score * weight;
+          maxes[q.category] += 100 * weight;
+        }
+        if (q.type === "options" && answer !== undefined) {
+          const option = q.options.find(opt => opt.value === answer);
+          if (option && option.scores) {
+            Object.entries(option.scores).forEach(([cat, score]) => {
+              totals[cat] += score;
+              maxes[cat] += 100;
+            });
+          }
+        }
+        if (q.type === "chips" && q.category) {
+          const selected = Array.isArray(answer) ? answer : [];
+          const points = selected.reduce((sum, label) => {
+            const option = q.options.find(opt => opt.label === label || opt === label);
+            return sum + (option && option.points ? option.points : 0);
+          }, 0);
+          totals[q.category] += Math.min(q.maxScore || 100, points);
+          maxes[q.category] += q.maxScore || 100;
+        }
+      });
+
+      const scores = {};
+      Object.keys(CATEGORY_DEFINITIONS).forEach(cat => {
+        scores[cat] = maxes[cat] > 0 ? Math.round((totals[cat] / maxes[cat]) * 100) : 0;
+        scores[cat] = Math.max(0, Math.min(100, scores[cat]));
+      });
+      return scores;
+    }
+
+    function getBandKey(score) {
+      if (score < 35) return "critical";
+      if (score < 50) return "below";
+      if (score < 60) return "basic";
+      if (score < 80) return "developing";
+      if (score < 90) return "strong";
+      return "advanced";
+    }
+
+    function chooseTrack(scores) {
+      const votes = {};
+      Object.keys(TRACKS).forEach(key => votes[key] = 0);
+
+      allQuestions.forEach(q => {
+        const answer = answers[q.id];
+        if (q.trackInfluence && answer && q.trackInfluence[answer]) votes[q.trackInfluence[answer]] += 3;
+      });
+
+      if (scores.software < 50) votes.digital_bim += 2;
+      if (scores.site < 50) votes.site_delivery += 1.5;
+      if (scores.project < 50) votes.project_leadership += 1.5;
+      if (scores.professional < 50) votes.professional_foundation += 2;
+      if (scores.structural < 50) votes.structural_design += 2;
+
+      if (answers.desired_destination === "oilgas") votes.oilgas += 5;
+      if (answers.biggest_barrier === "software") votes.digital_bim += 2;
+      if (answers.biggest_barrier === "technical") votes.structural_design += 2;
+      if (answers.biggest_barrier === "site") votes.site_delivery += 2;
+      if (answers.biggest_barrier === "management") votes.project_leadership += 2;
+      if (answers.desired_destination === "own_practice") votes.independent_practice += 3;
+
+      return Object.keys(votes).sort((a, b) => votes[b] - votes[a])[0] || "professional_foundation";
+    }
+
+    function buildArchetype(trackKey, scores) {
+      const low = Object.keys(scores).filter(cat => scores[cat] < 50).length;
+      const track = TRACKS[trackKey];
+      const avg = Math.round(Object.values(scores).reduce((a, b) => a + b, 0) / Object.values(scores).length);
+      return {
+        name: low >= 3 ? "Rebuilding Foundation Profile" : avg >= 75 ? "Developing Professional Strength Profile" : "Focused Growth Profile",
+        description: `Your recommended first route is the ${track.name}. Your result suggests you should focus on the linked roadmap while also improving your weakest categories before taking on greater responsibility.`,
+        tags: [track.name.replace(" Track", ""), `Average readiness ${avg}%`, low ? `${low} weak categories` : "No category below 50%"]
+      };
+    }
+
+    function buildDestinationGap(scores) {
+      const weak = Object.keys(scores).filter(cat => scores[cat] < 50);
+      return {
+        title: weak.length ? "Destination gap analysis" : "Destination readiness analysis",
+        items: weak.length
+          ? weak.map(cat => `${CATEGORY_DEFINITIONS[cat].label} is below 50%, so it must be treated as a weak category before you rely on it professionally.`)
+          : ["No category is below 50%, so your focus should be stronger portfolio proof, advanced practice, and clearer professional positioning."]
+      };
+    }
+
+    function buildNextSteps(scores, trackKey) {
+      const steps = [];
+      const track = TRACKS[trackKey];
+      steps.push({ category: "professional", title: `Primary track: ${track.name}`, description: track.why, priority: "Immediate" });
+
+      Object.keys(scores).sort((a, b) => scores[a] - scores[b]).slice(0, 4).forEach(cat => {
+        const def = CATEGORY_DEFINITIONS[cat];
+        const band = def.bands[getBandKey(scores[cat])];
+        steps.push({ category: cat, title: `${def.shortLabel}: ${band.label}`, description: band.actions[0], priority: scores[cat] < 50 ? "High priority" : "Next" });
+      });
+
+      if (trackKey === "oilgas") {
+        steps.splice(1, 0, { category: "software", title: "Oil & Gas entry portfolio", description: "Build a pipe rack, equipment support and access platform portfolio using STAAD.Pro or a steel-focused workflow, with hand checks and HSE/specification awareness.", priority: "High priority" });
+      }
+
+      return steps.slice(0, 8);
+    }
+
+    function buildResources(scores, trackKey) {
+      const focus = Object.keys(scores).sort((a, b) => scores[a] - scores[b]).slice(0, 3);
+      const list = [];
+      focus.forEach(cat => list.push(...RESOURCES[cat]));
+      if (trackKey === "digital_bim") list.unshift({ type: "Portfolio", name: "Model audit portfolio", note: "Show model screenshots, input assumptions, manual checks, exported results, and drawing coordination notes." });
+      if (trackKey === "oilgas") list.unshift({ type: "Portfolio", name: "Oil & Gas mini portfolio", note: "Prepare pipe rack, equipment support, base plate, access platform, and steel connection examples with checks." });
+      if (trackKey === "independent_practice") list.unshift({ type: "System", name: "Independent practice readiness checklist", note: "Use written scope, mentor review, calculation records, drawing issue control, QA checks, and professional limits before accepting responsibility." });
+      const seen = new Set();
+      return list.filter(item => { if (seen.has(item.name)) return false; seen.add(item.name); return true; }).slice(0, 6);
+    }
+
+    function showResult(report) {
+      const screen = document.getElementById("result-screen");
+      screen.style.display = "block";
+      screen.innerHTML = renderReport(report);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setTimeout(() => document.querySelectorAll(".bar-fill").forEach(el => el.style.width = el.dataset.width + "%"), 120);
+    }
+
+    function renderReport(report) {
+      const scoreCards = Object.entries(report.scores).map(([cat, score]) => renderCategoryCard(cat, score)).join("");
+      const weakAlerts = renderWeakAlerts(report.scores);
+      const destinationItems = report.destinationGap.items.map(item => `<li>${item}</li>`).join("");
+      const steps = report.nextSteps.map((step, index) => renderStep(step, index)).join("");
+      const resources = report.resources.map(renderResource).join("");
+      const strengths = report.strongestCategories.map(cat => `${CATEGORY_DEFINITIONS[cat].label} at ${report.scores[cat]}%`).join("</li><li>");
+      const gaps = report.focusCategories.map(cat => `${CATEGORY_DEFINITIONS[cat].label} at ${report.scores[cat]}% — ${CATEGORY_DEFINITIONS[cat].bands[getBandKey(report.scores[cat])].label}`).join("</li><li>");
+
+      return `
+        <div class="result-hero">
+          <div class="eyebrow">Your engineering profile</div>
+          <div class="result-title">${report.archetype.name}</div>
+          <p class="result-summary">${report.archetype.description}</p>
+          <div class="tags">${report.archetype.tags.map(tag => `<span class="tag">${tag}</span>`).join("")}</div>
+        </div>
+
+        <div class="result-grid">
+          <div class="result-card">
+            <h2>Recommended primary track</h2>
+            <div class="track-card">
+              <div class="track-icon">${report.track.icon}</div>
+              <div>
+                <div class="track-name">${report.track.name}</div>
+                <div class="track-why">${report.track.why}</div>
+                <span class="timeline">${report.track.timeline}</span>
+              </div>
+            </div>
+          </div>
+
+          ${renderRoadmapNavigation(report)}
+          ${weakAlerts}
+
+          <div class="result-card">
+            <h2>Category score diagnosis</h2>
+            <div class="score-grid">${scoreCards}</div>
+          </div>
+
+          <div class="result-card">
+            <h2>${report.destinationGap.title}</h2>
+            <div class="two-col">
+              <div class="mini-box strengths">
+                <h3>Current strengths</h3>
+                <ul><li>${strengths}</li></ul>
+              </div>
+              <div class="mini-box gaps">
+                <h3>Priority gaps</h3>
+                <ul><li>${gaps}</li></ul>
+              </div>
+            </div>
+            <div class="mini-box" style="margin-top:1rem;">
+              <h3 style="color:var(--blue);">How this affects your desired destination</h3>
+              <ul class="action-list">${destinationItems}</ul>
+            </div>
+          </div>
+
+          <div class="result-card">
+            <h2>Your next steps — in order</h2>
+            <div class="steps">${steps}</div>
+          </div>
+
+          <div class="result-card">
+            <h2>Recommended resources and systems</h2>
+            <div class="resource-grid">${resources}</div>
+            <p class="disclaimer">
+              This assessment is for career planning only. It does not replace licensed engineering judgement,
+              project-specific review, local code verification, employer supervision, or professional registration advice.
+              Confirm professional-body requirements from official sources because rules can change.
+            </p>
+          </div>
+        </div>
+
+        <div style="text-align:center; margin:1.5rem 0;">
+          <a href="#" class="btn" style="background:#0ea5e9; border-color:#38bdf8;">Join the StructPath Channel →</a>
+          <p style="font-size:0.85rem; color:var(--ink-3); margin-top:0.4rem;">Get weekly structural engineering roadmaps, real project breakdowns, and guided career growth.</p>
+        </div>
+
+        <div class="actions-row">
+          <a class="btn" href="roadmap_rewrite.html#${report.track.roadmapKey}">Open recommended roadmap →</a>
+          <button class="btn secondary" onclick="window.print()">Print or save report</button>
+          <button class="btn secondary" onclick="downloadSummary()">Download summary</button>
+          <button class="btn secondary" onclick="restartAssessment()">Start over</button>
+        </div>
+      `;
+    }
+
+    function renderRoadmapNavigation(report) {
+      const key = report.track.roadmapKey;
+      const nav = ROADMAP_GUIDANCE[key] || ROADMAP_GUIDANCE.career;
+      return `
+        <div class="result-card">
+          <h2>Recommended roadmap navigation</h2>
+          <div class="roadmap-nav-card">
+            <div class="roadmap-nav-top">
+              <div class="roadmap-icon">${report.track.icon}</div>
+              <div>
+                <div class="roadmap-title">${nav.title}</div>
+                <div class="roadmap-desc">${nav.desc}</div>
+              </div>
+            </div>
+            <div class="roadmap-steps">
+              ${nav.steps.map((step, index) => `<div class="roadmap-step"><span>${index + 1}</span><div>${step}</div></div>`).join("")}
+            </div>
+            <a class="btn" href="roadmap_rewrite.html#${key}">Open my roadmap →</a>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderCategoryCard(cat, score) {
+      const def = CATEGORY_DEFINITIONS[cat];
+      const bandKey = getBandKey(score);
+      const band = def.bands[bandKey];
+      const bg = `${def.color}18`;
+      const actions = band.actions.map(action => `<li>${action}</li>`).join("");
+      const weakText = score < 50
+        ? `<p class="category-meaning"><strong>${def.label} is less than 50%, so this category is weak.</strong> ${band.meaning}</p>`
+        : `<p class="category-meaning">${band.meaning}</p>`;
+
+      return `
+        <div class="category-card">
+          <div class="category-top">
+            <div class="category-name">${def.label}</div>
+            <div class="category-score" style="color:${def.color};">${score}%</div>
+          </div>
+          <div class="bar"><div class="bar-fill" data-width="${score}" style="background:${def.color};"></div></div>
+          <span class="band-label" style="background:${bg}; color:${def.color};">${band.label}</span>
+          ${weakText}
+          <ul class="action-list">${actions}</ul>
+        </div>
+      `;
+    }
+
+    function renderWeakAlerts(scores) {
+      const priorityCats = ["site", "software", "project", "professional", "structural"];
+      const alerts = priorityCats.filter(cat => scores[cat] < 50).map(cat => {
+        const def = CATEGORY_DEFINITIONS[cat];
+        const score = scores[cat];
+        const band = def.bands[getBandKey(score)];
+        return `
+          <div class="alert-card">
+            <strong>${def.label} is less than 50% (${score}%).</strong>
+            <p>This is currently a weak category. ${band.meaning} Start with: ${band.actions[0]}</p>
+          </div>
+        `;
+      }).join("");
+      if (!alerts) return "";
+      return `<div class="result-card"><h2>Important weak-category alerts</h2><div class="alerts">${alerts}</div></div>`;
+    }
+
+    function renderStep(step, index) {
+      const def = CATEGORY_DEFINITIONS[step.category] || CATEGORY_DEFINITIONS.professional;
+      const bg = `${def.color}18`;
+      return `
+        <div class="step-card">
+          <div class="step-num" style="background:${bg}; color:${def.color};">${String(index + 1).padStart(2, "0")}</div>
+          <div>
+            <h3>${step.title}</h3>
+            <p>${step.description}</p>
+            <span class="priority" style="background:${bg}; color:${def.color};">${step.priority}</span>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderResource(resource) {
+      return `
+        <div class="resource-item">
+          <span class="resource-type">${resource.type}</span>
+          <strong>${resource.name}</strong>
+          <span>${resource.note}</span>
+          ${resource.url ? `<a href="${resource.url}" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:0.45rem;font-weight:850;color:var(--blue);">Open video/resource →</a>` : ""}
+        </div>
+      `;
+    }
+
+    function downloadSummary() {
+      const report = buildReport();
+      const lines = [
+        "StructPath Assessment Summary",
+        "Build with Jay",
+        "================================",
+        `Profile: ${report.archetype.name}`,
+        `Recommended track: ${report.track.name}`,
+        `Roadmap link: roadmap_rewrite.html#${report.track.roadmapKey}`,
+        "",
+        "Scores:",
+        ...Object.entries(report.scores).map(([cat, score]) => `- ${CATEGORY_DEFINITIONS[cat].label}: ${score}% (${CATEGORY_DEFINITIONS[cat].bands[getBandKey(score)].label})`),
+        "",
+        "Next steps:",
+        ...report.nextSteps.map((step, i) => `${i + 1}. ${step.description}`),
+        "",
+        "Note: Career planning only. Confirm professional requirements from official sources."
+      ];
+      const blob = new Blob([lines.join("\n")], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "structpath-assessment-summary.txt";
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function restartAssessment() {
+      Object.keys(answers).forEach(key => delete answers[key]);
+      currentSectionIndex = 0;
+      document.getElementById("result-screen").style.display = "none";
+      document.getElementById("assessment-container").style.display = "none";
+      document.getElementById("questions-screen").style.display = "block";
+      document.getElementById("loading-screen").style.display = "none";
+      document.getElementById("hero-section").style.display = "block";
+      updateProgress();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  </script>
+</body>
+</html>

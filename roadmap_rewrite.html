@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>StructPath — Civil & Structural Engineering Roadmap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #0f172a;
+  --ink-2: #334155;
+  --ink-3: #64748b;
+  --paper: #f8fafc;
+  --paper-2: #eef6ff;
+  --paper-3: #dbeafe;
+  --white: #ffffff;
+  --border: rgba(37,99,235,0.14);
+  --border-m: rgba(37,99,235,0.24);
+  --radius: 10px;
+  --radius-lg: 18px;
+  --radius-xl: 26px;
+  --shadow: 0 18px 50px rgba(30,58,138,0.10);
+  --blue-deep: #1e3a8a;
+  --blue: #2563eb;
+  --blue-soft: #eff6ff;
+  --accent: #0ea5e9;
+  --foundation: #475569;
+  --design: #2563eb;
+  --site: #0ea5e9;
+  --oilgas: #0f766e;
+  --geotech: #16a34a;
+  --pm: #7c3aed;
+  --digital: #0284c7;
+  --career: #1e40af;
+}
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: 'Outfit', sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  min-height: 100vh;
+}
+button, a { -webkit-tap-highlight-color: transparent; }
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(37,99,235,.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37,99,235,.07) 1px, transparent 1px),
+    radial-gradient(circle at 18% 10%, rgba(14,165,233,.18), transparent 26%),
+    radial-gradient(circle at 85% 5%, rgba(37,99,235,.13), transparent 28%);
+  background-size: 46px 46px, 46px 46px, auto, auto;
+}
+.site-header, .track-bar, .layout { position: relative; z-index: 1; }
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  background: rgba(248,250,252,0.92);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(14px);
+}
+.brand-block { display: flex; flex-direction: column; gap: 1px; line-height: 1; }
+.logo {
+  font-family: 'DM Serif Display', serif;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 1.28rem;
+  letter-spacing: -.02em;
+}
+.logo span { color: var(--blue); font-style: italic; }
+.brand-tagline {
+  font-family: 'DM Mono', monospace;
+  font-size: .58rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-top: 4px;
+}
+.header-right { display: flex; align-items: center; gap: 10px; }
+.progress-pill {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--ink-3);
+  border: 1px solid var(--border-m);
+  background: var(--white);
+  border-radius: 999px;
+  padding: 6px 10px;
+  white-space: nowrap;
+}
+.take-assessment-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  background: var(--blue-deep);
+  color: white;
+  border-radius: var(--radius);
+  padding: 8px 13px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  transition: background .18s, transform .18s;
+}
+.take-assessment-btn:hover { background: var(--blue); transform: translateY(-1px); }
+.track-bar {
+  position: sticky;
+  top: 65px;
+  z-index: 90;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 0 2rem;
+  background: rgba(248,250,252,0.92);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(14px);
+}
+.track-bar::-webkit-scrollbar { display: none; }
+.track-btn {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  color: var(--ink-3);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 13px 15px;
+  font-family: 'Outfit', sans-serif;
+  font-size: .8rem;
+  font-weight: 700;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+}
+.track-btn:hover, .track-btn.active { color: var(--blue-deep); }
+.track-btn.active { border-bottom-color: var(--blue); }
+.track-dot { width: 8px; height: 8px; border-radius: 999px; flex-shrink: 0; }
+.layout { display: grid; grid-template-columns: 290px 1fr; min-height: calc(100vh - 116px); }
+.sidebar {
+  position: sticky;
+  top: 116px;
+  height: calc(100vh - 116px);
+  overflow-y: auto;
+  border-right: 1px solid var(--border);
+  padding: 1.4rem 1.2rem;
+  background: rgba(248,250,252,.55);
+}
+.sidebar-title {
+  font-family: 'DM Mono', monospace;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  letter-spacing: .09em;
+  font-size: .66rem;
+  margin-bottom: .8rem;
+}
+.side-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: rgba(255,255,255,.78);
+  padding: .95rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 8px 28px rgba(30,58,138,.05);
+}
+.side-card h3 { font-size: .84rem; margin-bottom: .35rem; color: var(--blue-deep); }
+.side-card p { font-size: .76rem; color: var(--ink-2); line-height: 1.55; }
+.side-link {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink-3);
+  font-family: 'Outfit', sans-serif;
+  font-size: .78rem;
+  padding: 8px 9px;
+  border-radius: 10px;
+}
+.side-link:hover { background: var(--blue-soft); color: var(--blue-deep); }
+.side-count { font-family: 'DM Mono', monospace; font-size: .66rem; }
+.canvas { padding: 2.35rem 3rem 4rem; overflow-x: hidden; }
+.panel { display: none; }
+.panel.active { display: block; }
+.hero { max-width: 980px; margin-bottom: 2rem; }
+.eyebrow {
+  font-family: 'DM Mono', monospace;
+  color: var(--blue);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  font-size: .72rem;
+  margin-bottom: .85rem;
+}
+.hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2rem, 5vw, 3.75rem);
+  line-height: 1.03;
+  letter-spacing: -.04em;
+  margin-bottom: 1rem;
+  color: #0f172a;
+}
+.hero h1 em { color: var(--blue); font-style: italic; }
+.hero p { max-width: 790px; color: var(--ink-2); line-height: 1.75; font-size: .99rem; }
+.intro-shell {
+  max-width: 1120px;
+  margin-bottom: 1.5rem;
+  padding: clamp(1.4rem, 4vw, 3.2rem);
+  border-radius: 32px;
+  background:
+    radial-gradient(circle at 18% 20%, rgba(14,165,233,.22), transparent 30%),
+    radial-gradient(circle at 90% 15%, rgba(37,99,235,.20), transparent 26%),
+    linear-gradient(135deg, #0f172a, #172554 58%, #1e3a8a);
+  color: white;
+  box-shadow: 0 28px 80px rgba(15,23,42,.22);
+  position: relative;
+  overflow: hidden;
+}
+.intro-shell::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(to bottom, black, transparent 85%);
+  pointer-events: none;
+}
+.intro-content { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; text-align: center; }
+.intro-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.08);
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-family: 'DM Mono', monospace;
+  font-size: .68rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: #bfdbfe;
+  margin-bottom: 1.15rem;
+}
+.intro-content h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2.4rem, 7vw, 5rem);
+  line-height: .96;
+  letter-spacing: -.055em;
+  margin-bottom: 1.1rem;
+}
+.intro-content h1 span {
+  background: linear-gradient(90deg, #93c5fd, #ffffff, #38bdf8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.intro-lead {
+  max-width: 820px;
+  margin: 0 auto;
+  color: rgba(255,255,255,.82);
+  font-size: clamp(.98rem, 1.8vw, 1.18rem);
+  line-height: 1.75;
+}
+.intro-support {
+  max-width: 760px;
+  margin: 1rem auto 0;
+  color: rgba(219,234,254,.86);
+  line-height: 1.7;
+  font-size: .94rem;
+}
+.intro-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: .75rem;
+  margin-top: 1.6rem;
+}
+.intro-btn {
+  border: 1px solid rgba(255,255,255,.20);
+  border-radius: 999px;
+  padding: 11px 16px;
+  font-family: 'Outfit', sans-serif;
+  font-size: .86rem;
+  font-weight: 800;
+  cursor: pointer;
+  color: white;
+  background: rgba(255,255,255,.10);
+  transition: transform .16s, background .16s;
+}
+.intro-btn.primary { background: #2563eb; border-color: #60a5fa; }
+.intro-btn:hover { transform: translateY(-2px); background: rgba(255,255,255,.16); }
+.intro-btn.primary:hover { background: #1d4ed8; }
+.intro-highlight {
+  position: relative;
+  z-index: 1;
+  max-width: 980px;
+  margin: 1.4rem auto 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: .75rem;
+}
+.intro-card {
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.08);
+  border-radius: 18px;
+  padding: .95rem;
+  text-align: left;
+  backdrop-filter: blur(8px);
+}
+.intro-card strong { display: block; color: white; font-size: .86rem; margin-bottom: .3rem; }
+.intro-card span { display: block; color: rgba(219,234,254,.78); font-size: .75rem; line-height: 1.45; }
+@media (max-width: 860px) {
+  .intro-highlight { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 540px) {
+  .intro-highlight { grid-template-columns: 1fr; }
+  .intro-content { text-align: left; }
+  .intro-actions { justify-content: flex-start; }
+}
+.mind-map-wrap {
+  max-width: 1120px;
+  border: 1px solid rgba(37,99,235,.18);
+  border-radius: var(--radius-xl);
+  background:
+    radial-gradient(circle at 50% 48%, rgba(37,99,235,.12), transparent 32%),
+    linear-gradient(135deg, rgba(255,255,255,.97), rgba(239,246,255,.92));
+  padding: clamp(1rem, 3vw, 2rem);
+  box-shadow: var(--shadow);
+  margin-bottom: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.mind-map-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 20px;
+  border-radius: 20px;
+  border: 1px dashed rgba(37,99,235,.18);
+  pointer-events: none;
+}
+.mind-map-heading { position: relative; z-index: 1; max-width: 790px; margin-bottom: 1.5rem; }
+.mind-map-heading h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.55rem, 3vw, 2.4rem);
+  line-height: 1.08;
+  letter-spacing: -.025em;
+  margin-bottom: .6rem;
+  color: var(--blue-deep);
+}
+.mind-map-heading p { color: var(--ink-2); line-height: 1.65; font-size: .92rem; }
+.mind-map {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  grid-template-areas:
+    '. design .'
+    'site core oilgas'
+    'pm digital career';
+  gap: 1rem;
+  align-items: stretch;
+}
+.mind-node {
+  border: 1px solid rgba(37,99,235,.16);
+  border-radius: 18px;
+  background: rgba(255,255,255,.88);
+  padding: 1rem;
+  min-height: 132px;
+  cursor: pointer;
+  box-shadow: 0 12px 34px rgba(15,23,42,.07);
+  transition: transform .18s, border-color .18s, box-shadow .18s;
+  text-align: left;
+  font-family: 'Outfit', sans-serif;
+}
+.mind-node:hover { transform: translateY(-4px); border-color: rgba(37,99,235,.45); box-shadow: 0 18px 44px rgba(37,99,235,.14); }
+.mind-node.core {
+  grid-area: core;
+  background: linear-gradient(135deg, var(--blue-deep), var(--blue));
+  color: white;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.mind-node.design { grid-area: design; }
+.mind-node.site { grid-area: site; }
+.mind-node.oilgas { grid-area: oilgas; }
+.mind-node.pm { grid-area: pm; }
+.mind-node.digital { grid-area: digital; }
+.mind-node.career { grid-area: career; }
+.mind-icon { font-size: 1.65rem; margin-bottom: .55rem; display: block; }
+.mind-title { font-weight: 800; color: var(--blue-deep); margin-bottom: .35rem; font-size: .96rem; }
+.mind-node.core .mind-title { color: white; font-size: 1.05rem; }
+.mind-desc { color: #475569; font-size: .78rem; line-height: 1.5; }
+.mind-node.core .mind-desc { color: rgba(255,255,255,.84); }
+.mind-meta {
+  display: inline-flex;
+  margin-top: .75rem;
+  font-family: 'DM Mono', monospace;
+  font-size: .64rem;
+  color: var(--blue);
+  background: rgba(37,99,235,.08);
+  border-radius: 999px;
+  padding: 4px 8px;
+}
+.mind-node.core .mind-meta { color: white; background: rgba(255,255,255,.14); }
+.route-bridge {
+  max-width: 1120px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: .85rem;
+  margin-bottom: 1.3rem;
+}
+.bridge-card {
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.78);
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: 0 8px 28px rgba(30,58,138,.05);
+}
+.bridge-card h3 { font-size: .9rem; color: var(--blue-deep); margin-bottom: .35rem; }
+.bridge-card p { font-size: .78rem; color: var(--ink-2); line-height: 1.55; }
+.notice {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 12px;
+  align-items: start;
+  border: 1px solid rgba(14,165,233,.24);
+  background: rgba(239,246,255,.78);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  margin: 1.5rem 0;
+  max-width: 980px;
+}
+.notice-icon { font-size: 1.35rem; }
+.notice h3 { font-size: .9rem; margin-bottom: .25rem; color: var(--blue-deep); }
+.notice p { color: var(--ink-2); font-size: .84rem; line-height: 1.55; }
+.track-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  max-width: 1120px;
+}
+.track-card {
+  background: rgba(255,255,255,.94);
+  padding: 1.25rem;
+  cursor: pointer;
+  transition: background .16s, transform .16s;
+}
+.track-card:hover { background: var(--blue-soft); }
+.card-icon { font-size: 1.55rem; margin-bottom: .65rem; }
+.card-title { font-weight: 800; margin-bottom: .35rem; font-size: .98rem; }
+.card-desc { font-size: .8rem; color: var(--ink-2); line-height: 1.55; margin-bottom: .75rem; }
+.card-meta { font-family: 'DM Mono', monospace; color: var(--ink-3); font-size: .68rem; }
+.track-header { max-width: 940px; margin-bottom: 1.6rem; }
+.track-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: .8rem;
+  font-family: 'DM Mono', monospace;
+  font-size: .68rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 6px 10px;
+  border: 1px solid var(--border-m);
+}
+.track-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.7rem, 3vw, 2.35rem);
+  line-height: 1.08;
+  letter-spacing: -.02em;
+  margin-bottom: .6rem;
+}
+.track-desc { color: var(--ink-2); line-height: 1.7; font-size: .94rem; max-width: 790px; }
+.track-outcomes { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 1rem; }
+.outcome-chip {
+  font-family: 'DM Mono', monospace;
+  font-size: .68rem;
+  color: var(--ink-2);
+  border: 1px solid var(--border);
+  background: white;
+  padding: 4px 8px;
+  border-radius: 999px;
+}
+.career-map-note {
+  max-width: 940px;
+  margin: 1.1rem 0;
+  border: 1px solid rgba(37,99,235,.18);
+  border-radius: var(--radius-lg);
+  background: rgba(239,246,255,.65);
+  padding: 1rem;
+  color: var(--ink-2);
+  line-height: 1.6;
+  font-size: .84rem;
+}
+.roadmap-flow {
+  max-width: 1120px;
+  margin: 1.25rem 0 1.7rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(37,99,235,.18);
+  border-radius: var(--radius-xl);
+  background: rgba(255,255,255,.82);
+  box-shadow: 0 18px 50px rgba(30,58,138,.08);
+  overflow-x: auto;
+}
+.flow-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.4rem;
+}
+.flow-title h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.45rem;
+  color: var(--blue-deep);
+  letter-spacing: -.02em;
+}
+.flow-title span {
+  font-family: 'DM Mono', monospace;
+  font-size: .68rem;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+.flow-canvas {
+  min-width: 820px;
+  display: grid;
+  grid-template-columns: 1fr 260px 1fr;
+  gap: 2.2rem;
+  position: relative;
+  padding: .5rem 0;
+}
+.flow-spine {
+  grid-column: 2;
+  display: grid;
+  gap: .75rem;
+  position: relative;
+}
+.flow-spine::before {
+  content: '';
+  position: absolute;
+  top: 12px;
+  bottom: 12px;
+  left: 50%;
+  width: 4px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: linear-gradient(var(--blue), var(--accent));
+  z-index: 0;
+}
+.flow-main-node,
+.flow-branch-node {
+  border: 3px solid #020617;
+  border-radius: 8px;
+  background: #fff200;
+  padding: .75rem .9rem;
+  text-align: center;
+  font-weight: 800;
+  font-size: .88rem;
+  color: #020617;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 4px 0 rgba(2,6,23,.12);
+}
+.flow-main-node small,
+.flow-branch-node small {
+  display: block;
+  font-family: 'DM Mono', monospace;
+  font-size: .58rem;
+  color: #475569;
+  margin-top: .2rem;
+  font-weight: 500;
+}
+.flow-left,
+.flow-right {
+  display: grid;
+  align-content: start;
+  gap: .75rem;
+  padding-top: 1rem;
+}
+.flow-left { grid-column: 1; }
+.flow-right { grid-column: 3; }
+.flow-branch-node {
+  background: #fee8a1;
+  min-height: 54px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.flow-branch-node::after,
+.flow-branch-node::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 2.25rem;
+  border-top: 4px dotted var(--blue);
+}
+.flow-left .flow-branch-node::after { right: -2.35rem; }
+.flow-right .flow-branch-node::before { left: -2.35rem; }
+.flow-branch-node.done-mark::marker { display: none; }
+.flow-note-box {
+  max-width: 390px;
+  border: 1px solid rgba(37,99,235,.14);
+  background: #f8fafc;
+  border-radius: 14px;
+  padding: 1rem;
+  color: var(--ink-2);
+  font-size: .82rem;
+  line-height: 1.55;
+}
+.flow-note-box strong { color: var(--blue-deep); }
+@media (max-width: 760px) {
+  .roadmap-flow { padding: 1rem; }
+  .flow-title { align-items: flex-start; flex-direction: column; }
+  .flow-canvas { min-width: 720px; grid-template-columns: 1fr 230px 1fr; gap: 1.6rem; }
+  .flow-branch-node::after,
+  .flow-branch-node::before { width: 1.65rem; }
+  .flow-left .flow-branch-node::after { right: -1.75rem; }
+  .flow-right .flow-branch-node::before { left: -1.75rem; }
+}
+.phase {
+  max-width: 1020px;
+  margin-bottom: .85rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: rgba(255,255,255,.88);
+  box-shadow: 0 8px 28px rgba(30,58,138,.045);
+}
+.phase-head {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 1rem 1.1rem;
+  font-family: 'Outfit', sans-serif;
+}
+.phase-head:hover { background: rgba(239,246,255,.7); }
+.phase-kicker { font-family: 'DM Mono', monospace; color: var(--ink-3); font-size: .67rem; text-transform: uppercase; letter-spacing: .07em; }
+.phase-name { font-weight: 800; color: var(--ink); font-size: .98rem; margin-top: .15rem; }
+.phase-summary { font-size: .8rem; color: var(--ink-2); line-height: 1.45; margin-top: .25rem; }
+.phase-count { font-family: 'DM Mono', monospace; font-size: .68rem; color: var(--ink-3); }
+.chev { font-size: 1.1rem; color: var(--ink-3); transition: transform .18s; }
+.phase.open .chev { transform: rotate(90deg); }
+.phase-body { display: none; padding: 0 1.1rem 1.1rem; }
+.phase.open .phase-body { display: block; }
+.module-list { display: grid; gap: 9px; }
+.module { border: 1px solid var(--border); border-radius: var(--radius); background: white; overflow: hidden; }
+.module-head {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  gap: 10px;
+  align-items: start;
+  padding: .85rem .9rem;
+  font-family: 'Outfit', sans-serif;
+}
+.module-head:hover { background: rgba(239,246,255,.6); }
+.module-icon { font-size: 1.15rem; line-height: 1.1; }
+.module-title { display: block; font-size: .9rem; font-weight: 800; color: var(--ink); }
+.module-sub { display: block; color: var(--ink-3); font-size: .76rem; line-height: 1.4; margin-top: 2px; }
+.done-btn {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  border: 1.5px solid var(--border-m);
+  background: white;
+  color: white;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .75rem;
+  flex-shrink: 0;
+}
+.module.done .done-btn { background: var(--blue); border-color: var(--blue); }
+.module-body { display: none; border-top: 1px solid var(--border); padding: .9rem; }
+.module.open .module-body { display: block; }
+.detail-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.detail h4 {
+  font-family: 'DM Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--ink-3);
+  font-size: .64rem;
+  margin-bottom: .45rem;
+}
+ul.clean { list-style: none; display: grid; gap: 5px; }
+ul.clean li { position: relative; padding-left: 14px; color: var(--ink-2); font-size: .78rem; line-height: 1.45; }
+ul.clean li::before { content: '→'; position: absolute; left: 0; color: var(--blue); }
+.route-note {
+  margin-top: .8rem;
+  border-radius: var(--radius);
+  padding: .75rem .85rem;
+  background: rgba(14,165,233,.08);
+  border: 1px solid rgba(14,165,233,.18);
+  color: var(--ink-2);
+  font-size: .78rem;
+  line-height: 1.5;
+}
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1.1rem; }
+.btn {
+  border: 1px solid var(--border-m);
+  border-radius: var(--radius);
+  padding: 9px 12px;
+  cursor: pointer;
+  font-family: 'Outfit', sans-serif;
+  font-size: .8rem;
+  font-weight: 800;
+  background: white;
+  color: var(--ink);
+}
+.btn.primary { background: var(--blue-deep); color: white; border-color: var(--blue-deep); }
+.btn:hover { transform: translateY(-1px); }
+.footer-note { max-width: 940px; margin-top: 2rem; color: var(--ink-3); font-size: .76rem; line-height: 1.6; }
+@media (max-width: 860px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .canvas { padding: 1.5rem 1rem 3rem; }
+  .site-header { padding: 1rem; }
+  .track-bar { top: 65px; padding: 0 1rem; }
+  .detail-grid { grid-template-columns: 1fr; }
+  .header-right { gap: 6px; }
+  .progress-pill { display: none; }
+}
+@media (max-width: 760px) {
+  .mind-map {
+    grid-template-columns: 1fr;
+    grid-template-areas: 'core' 'design' 'site' 'oilgas' 'pm' 'digital' 'career';
+  }
+  .mind-node { min-height: auto; }
+  .phase-head { grid-template-columns: auto 1fr; }
+  .phase-count { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+
+<header class="site-header">
+  <div class="brand-block">
+    <a href="#" class="logo" onclick="switchPanel('home'); return false;">Struct<span>Path</span></a>
+    <div class="brand-tagline">Build with Jay</div>
+  </div>
+  <div class="header-right">
+    <div class="progress-pill" id="progress-pill">0 / 0 done</div>
+    <a href="assessment.html" class="take-assessment-btn" onclick="window.location.href='assessment.html'">Take assessment ↗</a>
+  </div>
+</header>
+
+<nav class="track-bar" id="track-bar"></nav>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-title">Roadmap logic</div>
+    <div class="side-card">
+      <h3>Use this as a route map</h3>
+      <p>Start with the Foundation Core, then choose an end goal. Each track opens phase by phase so the user can see the career path beneath the current step.</p>
+    </div>
+    <div class="sidebar-title">On this page</div>
+    <div id="sidebar-links"></div>
+  </aside>
+
+  <main class="canvas" id="canvas">
+    <section class="panel active" id="panel-home"></section>
+  </main>
+</div>
+
+<script>
+const STORAGE_KEY = 'structpath_roadmap_done_v3';
+let done = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+let currentPanel = 'home';
+
+function mod(id, icon, title, sub, skills, actions, resources) {
+  return { id, icon, title, sub, skills, actions, resources };
+}
+
+const TRACKS = [
+  {
+    id: 'foundation', short: 'Foundation', label: 'Foundation Core', icon: '🧭', color: '#475569',
+    desc: 'The non-negotiable base for every civil/structural graduate: mechanics, RC design, site literacy, drawings, documentation, and basic software.',
+    outcomes: ['Graduate trainee', 'Junior design engineer', 'Junior site engineer', 'NYSC engineer'],
+    careerNote: 'Use this route before any specialisation. It gives you the minimum technical, site and documentation language needed to understand every other path.',
+    phases: [
+      { id:'f1', label:'Phase 1', title:'Engineering fundamentals before software', summary:'Build first-principles confidence so software output makes sense.', modules:[
+        mod('f-statics','⚖️','Statics, mechanics and load path','FBDs, equilibrium, shear, bending, deflection, axial force and stability.', ['Free body diagrams','Shear force and bending moment diagrams','Load path from slab to foundation','Basic buckling and serviceability checks'], ['Solve 20 beam/frame problems by hand','Redraw load paths for 5 real buildings','Create a one-page formula sheet'], ['Hibbeler Engineering Mechanics','Kassimali Structural Analysis','MIT OCW mechanics lectures']),
+        mod('f-materials','🧱','Materials and behaviour','Concrete, reinforcing steel, structural steel, masonry, timber and durability.', ['Stress-strain behaviour','Concrete grades and mix basics','Rebar grades, laps, anchorage and cover','Durability for coastal/aggressive environments'], ['Inspect delivered cement, rebar and aggregate on site','Document one concrete pour from batching to cubes','Prepare a cover and durability checklist'], ['Neville Properties of Concrete','BS 8500 overview','Concrete Centre detailing guides']),
+        mod('f-drawings','📋','Reading drawings and specifications','Architectural, structural and MEP drawing literacy before design responsibility.', ['Plans, sections, elevations and details','Revision control','Gridlines, levels and setting out','RFI writing and coordination comments'], ['Review one full drawing set weekly','List 20 coordination clashes from sample drawings','Practise writing RFIs clearly'], ['ICE Site Engineers Manual','Autodesk AutoCAD tutorials','Structville drawing reading content'])
+      ]},
+      { id:'f2', label:'Phase 2', title:'Concrete, steel and foundation basics', summary:'Move from school theory to usable design office competence.', modules:[
+        mod('f-rc','🏗️','Reinforced concrete design base','Beams, slabs, columns, staircases and simple foundations using BS 8110 and EC2 awareness.', ['Ultimate and serviceability limit states','Beam, slab and column design','Punching shear and deflection checks','Pad, strip and raft foundation basics'], ['Design one simple 2-storey RC frame manually','Compare BS 8110 and EC2 output','Build a checked Excel design sheet'], ['Reynolds RC Designers Handbook','Mosley Bungey & Hulse RC Design','Structville RC examples']),
+        mod('f-steel','🔩','Steel design base','Members, connections, bracing, frames and fabrication-aware detailing.', ['Tension, compression and bending members','Bolted and welded connections','Bracing and stability','Fabrication tolerances and mill certificates'], ['Design a simple truss and portal frame','Sketch 10 practical connection details','Create a steel member checklist'], ['SCI Steel Designers Manual','Eurocode 3 guides','AISC design examples']),
+        mod('f-geotech','🌍','Foundation and soil awareness','Enough geotechnical understanding to question bad assumptions and read soil reports.', ['SPT/CPT basics','Bearing capacity and settlement','Groundwater, uplift and soft clay risk','Pile types and load testing'], ['Read 3 soil investigation reports','Summarise soil parameters in a design note','Visit or study one piling operation'], ['Das Geotechnical Engineering','Tomlinson Foundation Design','BS 5930 overview'])
+      ]},
+      { id:'f3', label:'Phase 3', title:'Minimum digital and professional toolkit', summary:'Prepare to function inside a real office or site team.', modules:[
+        mod('f-autocad','✏️','AutoCAD and PDF markup','Clear drafting, markups, plotting and drawing coordination.', ['Layers and lineweights','Blocks and annotation','Print layouts','Clouding and revision notes'], ['Redraw a simple floor framing plan','Prepare a clean structural detail sheet','Issue a mock revision with notes'], ['Autodesk Learn','CADTutor','YouTube CAD fundamentals']),
+        mod('f-excel','📊','Excel for engineering calculations','Traceable calculations, tables, checks and printable design sheets.', ['Named ranges and validation','Lookup tables','Error checks','Professional calculation formatting'], ['Build beam and column check sheets','Add warnings for unsafe input','Print to PDF as a calc pack'], ['ExcelJet','Chandoo','Engineering spreadsheet examples']),
+        mod('f-logbook','📓','Professional logbook and evidence','Record design, site and responsibility evidence from day one.', ['Daily engineering log','Photo evidence and sketches','Mentor review notes','Competence mapping for NSE/COREN'], ['Start a weekly logbook','Save before/after site photos','Write one lesson learned per project'], ['COREN/NSE guidance','ICE attributes framework','IStructE portfolio examples'])
+      ]}
+    ]
+  },
+  {
+    id: 'design', short: 'Design Consultant', label: 'Structural Design Consultant Path', icon: '📐', color: '#2563eb',
+    desc: 'For engineers aiming to become trusted building structural designers, design leads, peer reviewers or future consulting practice owners.',
+    outcomes: ['Structural designer', 'Design lead', 'Consulting practice owner', 'Peer reviewer'],
+    careerNote: 'Career map: Years 0–1 should focus on residential/light commercial buildings and manual checks. Years 1–3 should add ETABS/SAP, medium-rise buildings, detailing and real drawing coordination. Years 3–5 should move into complex systems, review responsibility, client coordination and portfolio proof. Branch later into PM, BIM/digital, oil and gas steel structures, or independent practice only after strong evidence.',
+    phases: [
+      { id:'d1', label:'Years 0–1', title:'Design office readiness', summary:'Become useful on real building projects without relying blindly on software.', modules:[
+        mod('d-loading','⬇️','Actions, load combinations and modelling assumptions','Dead, live, wind, imposed loads, combinations and structural idealisation.', ['Load take-downs','BS 6399 / EC1 awareness','Wind load basics','Load combinations and notional loads'], ['Prepare load schedules for 3 buildings','Document assumptions before modelling','Check all self-weight and finishes'], ['Eurocode 1','BS 6399','Reynolds RC Handbook']),
+        mod('d-rc-system','🏢','RC building systems','Frames, slabs, shear walls, stairs, transfer beams and foundation interaction.', ['Flat slab vs beam-slab systems','Column grids and architectural coordination','Lateral stability concepts','Punching and deflection control'], ['Model a 4-storey RC building','Hand-check critical beams and columns','Prepare a design basis report'], ['ETABS / ProtaStructure examples','The Concrete Centre guides','IStructE technical guidance']),
+        mod('d-detailing','🧷','Detailing for buildability','Details that site teams can actually understand and construct.', ['Bar bending schedules','Laps, anchorage and curtailment','Congestion checks','Construction joints and pour breaks'], ['Detail a staircase, beam-column joint and slab edge','Review one BBS for errors','Create a site-friendly detail checklist'], ['NSCS specification','MPA RC detailing manual','Concrete Centre detailing guides'])
+      ]},
+      { id:'d2', label:'Years 1–3', title:'Analysis software with verification', summary:'Use ETABS/SAP2000 / STAAD.Pro as engineering tools, not as black boxes.', modules:[
+        mod('d-etabs','🏛️','ETABS for buildings','Modelling, loading, analysis, design and interpretation for buildings.', ['Grid and storey setup','Shell and frame modelling','Load cases and combinations','Modal analysis and drift review'], ['Model a real architectural plan','Compare reactions with hand load takedown','Export a clean result summary'], ['CSI + Bentley + Prota documentation','Structville ETABS tutorials','CSI webinars']),
+        mod('d-sap','🌉','SAP2000 / STAAD.Pro for general structures','Frames, shells, bridges, tanks and non-building structures.', ['Frame/shell modelling','Support idealisation','Nonlinear basics','Result envelopes'], ['Model a truss, footbridge and tank support','Check member forces manually','Prepare model assumptions note'], ['CSI SAP2000 / STAAD.Pro tutorials','Bridge analysis examples','Engineering Knowledge Store']),
+        mod('d-review','🔍','Design review and checking discipline','The habit that separates safe engineers from software operators.', ['Independent checks','Red flags in analysis output','Calculation presentation','Review comments and close-out'], ['Review another engineer’s sample calc','Create a design checker checklist','Write assumptions and limitations clearly'], ['IStructE Technical Guidance Notes','Arup design review examples','ICE design risk guidance'])
+      ]},
+      { id:'d3', label:'Years 3–5+', title:'Advanced building specialisation', summary:'Move toward high-value consulting expertise.', modules:[
+        mod('d-tall','🏙️','Tall buildings and lateral systems','Cores, shear walls, outriggers, second-order effects and wind response.', ['P-delta effects','Core-wall modelling','Drift and acceleration control','Transfer structures'], ['Study 3 high-rise systems','Model a 15-storey concept building','Write a lateral stability note'], ['Taranath Tall Buildings','CTBUH resources','Eurocode 8 awareness']),
+        mod('d-bridges','🌉','Bridge and infrastructure structures','Decks, bearings, joints, abutments and inspection-minded design.', ['Bridge loading','Deck analysis','Bearings and expansion joints','Durability and drainage'], ['Design a simple pedestrian bridge','Inspect a small bridge and note defects','Create a bridge component diagram'], ['FHWA bridge guides','Eurocode traffic loads','Pennells Bridge Engineering']),
+        mod('d-practice','🏢','Consulting practice systems','Templates, QA, client communication and project control for future firm leadership.', ['Design basis reports','Calculation templates','Drawing registers','Client and architect coordination'], ['Create office templates','Build a project folder standard','Draft a fee proposal template'], ['IStructE business guidance','FIDIC client-consultant basics','Small consultancy systems'])
+      ]}
+    ]
+  },
+  {
+    id: 'site', short: 'Site / Construction', label: 'Site & Construction Leadership Path', icon: '🦺', color: '#0ea5e9',
+    desc: 'For engineers who want to become strong site engineers, project engineers, construction managers or contractor-side technical leaders.',
+    outcomes: ['Site engineer', 'Project engineer', 'Construction manager', 'Resident engineer'],
+    careerNote: 'Career map: Years 0–1 should focus on inspection, drawing reading and daily records. Years 1–3 should combine QA/QC, RFIs, look-ahead planning and package coordination. Years 3–5 should move into subcontractor control, cost, variations, handover and leadership. This path connects naturally into Project Management.',
+    phases: [
+      { id:'s1', label:'Years 0–1', title:'Site control basics', summary:'Know what to inspect, record and challenge on a live site.', modules:[
+        mod('s-inspection','👷','Structural inspection discipline','Rebar, formwork, concrete, levels, dimensions and hold points.', ['Pre-pour checks','Cube/slump testing','Cover and lap verification','Non-conformance reporting'], ['Use a pre-pour checklist on a sample element','Photograph and mark up defects','Prepare an NCR example'], ['ICE Site Engineers Manual','Concrete Society reports','CIOB site guides']),
+        mod('s-setting','📍','Setting out and temporary works awareness','Gridlines, levels, scaffolds, falsework and safe construction sequence.', ['Setting out checks','Survey coordination','Temporary works red flags','Sequence and stability during construction'], ['Check grid-to-column alignment','Prepare a level check sheet','Study one collapse case and identify site failures'], ['Temporary Works Forum guidance','CIRIA site guides','Survey basics resources']),
+        mod('s-quality','✅','QA/QC documentation','ITPs, method statements, material approvals and test records.', ['Inspection test plans','Material submittals','Method statement review','Test result tracking'], ['Create an ITP for RC works','Review a method statement','Build a concrete test register'], ['ISO 9001 basics','CIOB quality guides','Contractor QA templates'])
+      ]},
+      { id:'s2', label:'Years 1–3', title:'Construction coordination', summary:'Move from observing work to controlling production and resolving conflicts.', modules:[
+        mod('s-rfi','📝','RFIs, site instructions and drawing control','Keep the site building from the correct information.', ['RFI writing','Drawing register control','Revision management','Coordination with design team'], ['Write 10 clear RFIs from sample conflicts','Maintain a drawing revision tracker','Close out one mock design query'], ['FIDIC communication examples','CIOB management guides','Document control templates']),
+        mod('s-programme','🗓️','Programme and daily production control','Understand time, productivity, resources and critical path.', ['Look-ahead planning','Daily reports','Labour and equipment tracking','Critical path basics'], ['Prepare a 2-week lookahead','Track daily concrete output','Identify causes of delay'], ['MS Project tutorials','Primavera basics','Last Planner System guides']),
+        mod('s-hse','⚠️','HSE and risk management','Safety leadership as part of engineering responsibility.', ['Risk assessments','Toolbox talks','Permit-to-work awareness','Emergency response'], ['Draft a risk assessment for formwork','Run a mock toolbox talk','Prepare a site hazard register'], ['NEBOSH IGC materials','ISO 45001 overview','Nigerian HSE policy references'])
+      ]},
+      { id:'s3', label:'Years 3–5+', title:'Project engineer level', summary:'Own packages, budgets, subcontractors and technical coordination.', modules:[
+        mod('s-contracts','📄','Contracts, variations and payment certificates','Understand how engineering decisions affect money and claims.', ['FIDIC basics','Variation notices','Interim payment certificates','Claims evidence'], ['Draft a variation record','Review a BOQ item against site work','Prepare a payment backup file'], ['FIDIC Red Book overview','Murdoch Construction Contracts','RICS NRM basics']),
+        mod('s-subcontract','🤝','Subcontractor and package management','Control piling, steel, concrete, façade or finishes packages.', ['Scope boundaries','Shop drawing review','Progress meetings','Defect close-out'], ['Prepare a subcontractor meeting agenda','Track package deliverables','Build a snag list template'], ['CIOB PM guidance','Contractor package templates','Construction management texts']),
+        mod('s-handover','🔑','Testing, commissioning and handover','Close projects professionally with records and accountability.', ['As-built drawings','O&M manuals','Defects liability','Final inspections'], ['Create a handover checklist','Compile sample as-built records','Prepare a defect register'], ['CIOB handover guidance','ISO documentation basics','Client completion checklists'])
+      ]}
+    ]
+  },
+  {
+    id: 'oilgas', short: 'Oil & Gas', label: 'Oil & Gas Structural Engineering Path', icon: '🛢️', color: '#0f766e',
+    desc: 'For engineers targeting EPC, offshore, refinery, LNG, industrial facilities, pipe racks, equipment supports, platforms and high-specification energy projects.',
+    outcomes: ['Oil & gas structural engineer', 'EPC design engineer', 'Offshore structural engineer', 'Industrial structures specialist'],
+    careerNote: 'Career map: Start by becoming strong in steel and industrial structural systems. Build mini-projects around pipe racks, equipment supports and access platforms. Target EPC firms, fabrication yards, oil servicing companies and energy contractors. Later specialise into offshore, refinery, LNG, FPSO modules, brownfield strengthening or PM within energy projects.',
+    phases: [
+      { id:'o1', label:'Entry Step 1', title:'Industrial structural foundation', summary:'Shift from buildings to steel-heavy, equipment-driven structures.', modules:[
+        mod('o-steel','🔩','Advanced steel design foundation','Steel members, bracing, connections, fatigue awareness and fabrication constraints.', ['Eurocode 3 / AISC awareness','Lateral bracing and stability','Base plates and anchor bolts','Connection load paths'], ['Design a braced steel frame','Detail a base plate and anchor bolt group','Review mill certificate requirements'], ['SCI Steel Designers Manual','AISC Design Examples','Eurocode 3 guides']),
+        mod('o-loads','🌪️','Industrial and environmental actions','Wind, equipment, thermal, vibration, blast, accidental and construction loads.', ['Equipment operating loads','Thermal expansion and restraint','Blast and accidental load awareness','Dynamic and vibration basics'], ['Prepare an equipment load summary','Model a pipe rack with operating loads','Create an action checklist for industrial structures'], ['ASCE 7 overview','API/ISO offshore references','Industrial structure design notes']),
+        mod('o-layout','🏭','Industrial layouts and structural systems','Pipe racks, equipment supports, modules, platforms, access steel and foundations.', ['Pipe rack framing','Equipment support framing','Grating, stairs and handrails','Maintenance access and constructability'], ['Sketch a pipe rack bay','Design a small equipment support','Review access/egress requirements'], ['Oil and gas structural drawings','EPC design basis samples','Steel grating manufacturer guides'])
+      ]},
+      { id:'o2', label:'Entry Step 2', title:'Oil & gas software and codes', summary:'Learn the toolchain and code environment expected in energy-sector work.', modules:[
+        mod('o-staad','🧮','STAAD.Pro for industrial frames','Common EPC tool for pipe racks, platforms and steel structures.', ['STAAD modelling workflow','Load combinations','Steel code checks','Foundation reactions'], ['Model a 3-bay pipe rack','Export member utilisation tables','Compare one critical member manually'], ['Bentley STAAD tutorials','EPC STAAD examples','Industrial STAAD workflows']),
+        mod('o-sacs','🌊','SACS and offshore analysis awareness','Offshore platforms, jackets, wave loading, pile-soil interaction and fatigue workflows.', ['Jacket structure concepts','Wave/current load concepts','Member unity checks','Fatigue and dynamic awareness'], ['Study a fixed platform structural system','Map jacket load path to piles','Build vocabulary before advanced SACS work'], ['Bentley SACS overview','API RP 2A references','Offshore structural engineering texts']),
+        mod('o-codes','📚','API, ISO and project specifications','Understand that oil and gas design is heavily specification-driven.', ['API RP 2A awareness','ISO 19900 series awareness','Client specifications','Design basis and MTO requirements'], ['Read one project specification and extract structural clauses','Prepare a design basis table','Create an acronyms glossary'], ['API/ISO summaries','Client spec samples','EPC document templates'])
+      ]},
+      { id:'o3', label:'Entry Step 3', title:'Entry strategy and advanced specialisation', summary:'Convert the skill stack into employability and long-term expertise.', modules:[
+        mod('o-hse','🦺','HSE, permits and regulated work culture','Oil and gas rewards documentation, discipline and safety maturity.', ['Permit-to-work culture','HAZID/HAZOP awareness','SIMOPS awareness','NEBOSH-level documentation'], ['Complete an HSE course','Prepare a job hazard analysis','Learn PTW vocabulary'], ['NEBOSH IGC','ISO 45001 overview','Project HSE expectations']),
+        mod('o-entry','🚪','Nigeria entry route: EPC and servicing firms','Target EPC contractors, oil servicing companies, refinery projects and fabrication yards.', ['CV positioning','Portfolio with steel models','Interview vocabulary','Networking with EPC engineers'], ['Build a mini portfolio: pipe rack + equipment support','Rewrite CV toward EPC roles','Connect with engineers in Port Harcourt, Lagos and Warri'], ['LinkedIn portfolio examples','EPC job descriptions','Oil and gas graduate role listings']),
+        mod('o-advanced','⚙️','Advanced offshore and refinery structures','FPSO modules, topsides, fatigue, lifting, transportation and brownfield modifications.', ['Module design concepts','Lifting and transportation checks','Brownfield strengthening','Fatigue and corrosion allowance'], ['Study FPSO module framing','Prepare a lifting-lug design study','Document one brownfield modification case'], ['Offshore Engineering texts','DNV recommended practices','FPSO case studies'])
+      ], note:'This track is intentionally stricter than the building route. It demands steel depth, documentation discipline, HSE maturity and comfort with project specifications.'}
+    ]
+  },
+  {
+    id: 'geotech', short: 'Geotechnical', label: 'Geotechnical & Foundation Specialist Path', icon: '⛏️', color: '#16a34a',
+    desc: 'For engineers drawn to soil behaviour, site investigation, foundations, retaining structures, reclamation, basements and ground risk.',
+    outcomes: ['Geotechnical engineer', 'Foundation designer', 'Site investigation engineer', 'Ground improvement specialist'],
+    careerNote: 'Career map: Start by reading soil reports and understanding investigation data. Then master shallow foundations, piles, retaining structures and construction-stage ground risk. Later specialise in basements, reclamation, ground improvement, forensic foundation review or infrastructure geotechnics.',
+    phases: [
+      { id:'g1', label:'Years 0–1', title:'Soil mechanics and investigation', summary:'Read the ground before designing the structure.', modules:[
+        mod('g-soil','🌍','Soil mechanics','Classification, shear strength, consolidation, permeability and settlement.', ['Atterberg limits','Mohr-Coulomb strength','Consolidation settlement','Seepage and permeability'], ['Classify 10 soil samples from reports','Calculate settlement for one footing','Summarise soil risks for coastal sites'], ['Das Geotechnical Engineering','Craig Soil Mechanics','BS 1377']),
+        mod('g-si','🔬','Site investigation and reporting','Boreholes, SPT, CPT, lab tests and interpretive reporting.', ['Borehole logs','SPT/CPT interpretation','Lab test selection','Ground model preparation'], ['Read 3 SI reports','Create a ground investigation checklist','Write a one-page interpretive summary'], ['BS 5930','Eurocode 7 Part 2','Industry report examples']),
+        mod('g-water','💧','Groundwater and excavation risk','Dewatering, uplift, basal heave, collapse and construction-stage behaviour.', ['Groundwater monitoring','Uplift checks','Dewatering methods','Temporary excavation support'], ['Map water table risk on a basement scheme','Prepare a dewatering checklist','Study one excavation failure'], ['CIRIA groundwater guidance','Eurocode 7','Basement construction guides'])
+      ]},
+      { id:'g2', label:'Years 1–3', title:'Foundation and ground systems', summary:'Design and review foundations under realistic ground conditions.', modules:[
+        mod('g-shallow','📍','Shallow and raft foundations','Bearing capacity, settlement, rafts and soil-structure interaction.', ['Pad and strip footings','Raft design concepts','Settlement limits','Bearing pressure review'], ['Design a pad and raft concept','Compare bearing vs settlement control','Review an ETABS raft reaction output'], ['Tomlinson Foundation Design','Bowles Foundation Analysis','Eurocode 7 guides']),
+        mod('g-piles','🪵','Pile foundations','Bored piles, CFA piles, driven piles, load tests and group effects.', ['End bearing and shaft friction','Pile group efficiency','Pile cap design interface','Static and dynamic load testing'], ['Calculate pile capacity from SPT data','Prepare a pile load test checklist','Visit or study a piling method'], ['ICE Specification for Piling','Tomlinson Pile Design','FHWA pile manuals']),
+        mod('g-retaining','🧱','Retaining walls and basements','Cantilever, gravity, embedded and anchored systems.', ['Earth pressure theories','Surcharge and water pressure','Wall stability checks','Construction sequence risk'], ['Design a cantilever retaining wall','Sketch a basement support sequence','Prepare wall movement monitoring notes'], ['CIRIA retaining wall guides','Eurocode 7','Basement design references'])
+      ]},
+      { id:'g3', label:'Years 3–5+', title:'Specialist geotechnical judgement', summary:'Move into risk assessment, review and advanced ground solutions.', modules:[
+        mod('g-ground','🧪','Ground improvement','PVDs, vibro, replacement, compaction, grouting and stabilisation.', ['Technique selection','Settlement improvement','Construction verification','Quality tests'], ['Compare 3 ground improvement options','Prepare a method selection matrix','Study one reclamation project'], ['Ground Improvement texts','CIRIA guides','FHWA manuals']),
+        mod('g-risk','⚠️','Ground risk and forensic review','Identify hidden risks before they become failures.', ['Ground models','Uncertainty logs','Monitoring triggers','Failure mechanisms'], ['Create a ground risk register','Study 3 foundation failures','Write a geotechnical review memo'], ['IStructE forensic notes','CIRIA risk guidance','Case history papers']),
+        mod('g-interface','🤝','Structural-geotechnical interface','Communicate soil behaviour clearly to structural and site teams.', ['Foundation reactions','Settlement compatibility','Pile cap coordination','Construction tolerances'], ['Create an interface checklist','Review foundation drawings with SI data','Hold a mock coordination review'], ['Eurocode 7 guidance','Project coordination templates','Foundation detailing guides'])
+      ]}
+    ]
+  },
+  {
+    id: 'pm', short: 'PM / Contracts', label: 'Project Management & Contracts Path', icon: '📊', color: '#7c3aed',
+    desc: 'For engineers who want to lead delivery, coordinate teams, control cost, manage contracts, handle claims and build project systems.',
+    outcomes: ['Project manager', 'Planning engineer', 'Contracts engineer', 'Construction director'],
+    careerNote: 'Career map: Do not jump into PM without site and technical literacy. Start by understanding drawings, production and QA. Then add planning, cost, contracts and claims. Later move into leadership systems, stakeholder management and project controls. This combines strongly with Site & Construction.',
+    phases: [
+      { id:'p1', label:'Years 0–1', title:'Technical-site management base', summary:'Gain the minimum engineering credibility needed to manage work.', modules:[
+        mod('p-drawings','📋','Drawing and scope control','Know what is included, excluded and changed.', ['Scope reading','BOQ interface','Drawing registers','Change identification'], ['Prepare a scope summary','Track drawing revisions','List ambiguous scope items'], ['FIDIC basics','CIOB guides','Document control templates']),
+        mod('p-report','📑','Daily and weekly reporting','Turn site activity into usable management evidence.', ['Progress photos','Daily reports','Manpower logs','Issue tracking'], ['Create a weekly report template','Track labour productivity','Prepare an issue log'], ['Contractor reporting templates','CIOB PM guidance','Excel dashboards']),
+        mod('p-programme','🗓️','Planning basics','Understand sequence, float, dependencies and delay signals.', ['Critical path','Look-ahead planning','Milestones','Resource loading'], ['Build a simple programme','Create a 2-week lookahead','Identify delay causes'], ['MS Project tutorials','Primavera basics','Last Planner System'])
+      ]},
+      { id:'p2', label:'Years 1–3', title:'Cost, contract and risk control', summary:'Understand how engineering decisions become money, time and claims.', modules:[
+        mod('p-cost','💰','Cost and measurement','BOQ, quantities, payment applications and cost tracking.', ['Measurement basics','Budget tracking','Interim payment certificates','Cost-to-complete'], ['Measure concrete and rebar quantities','Prepare payment backup','Build a cost tracker'], ['RICS NRM basics','QS measurement references','Contractor templates']),
+        mod('p-contract','📄','Contract administration','Notices, variations, instructions and responsibility boundaries.', ['FIDIC roles','Payment certificates','Variation orders','Delay notices'], ['Draft a variation notice','Prepare payment certificate backup','Create claims evidence checklist'], ['FIDIC Red Book overview','Murdoch Contracts','ICE contract notes']),
+        mod('p-risk','⚠️','Risk, HSE and stakeholder control','Manage uncertainty before it becomes crisis.', ['Risk registers','Stakeholder maps','HSE risk assessments','Mitigation tracking'], ['Create a risk register','Map project stakeholders','Prepare a mitigation tracker'], ['ISO 31000 overview','NEBOSH basics','PMI risk resources'])
+      ]},
+      { id:'p3', label:'Years 3–5+', title:'Leadership and delivery systems', summary:'Move from task completion to project leadership.', modules:[
+        mod('p-lead','🤝','Team leadership and meetings','Run decisions, not just conversations.', ['Meeting structure','Decision logs','Conflict handling','Delegation'], ['Run a mock progress meeting','Prepare minutes with actions','Maintain a decision register'], ['CIOB leadership resources','PMI stakeholder guides','Meeting facilitation guides']),
+        mod('p-procure','🚚','Procurement and supply chain','Manage long-lead items, vendors and material risk.', ['Procurement schedules','Vendor evaluation','Material approvals','Expediting'], ['Build a procurement tracker','Compare 3 supplier bids','Flag long-lead risks'], ['CIPS basics','Construction procurement guides','Contractor templates']),
+        mod('p-systems','🏗️','Company delivery systems','Templates, SOPs and repeatable project control.', ['SOP writing','Quality systems','Lessons learned','Portfolio management'], ['Write one SOP','Create a project closeout template','Compile lessons learned'], ['ISO 9001 basics','PMO setup guides','Systems thinking'])
+      ]}
+    ]
+  },
+  {
+    id: 'digital', short: 'Software / BIM', label: 'Software, BIM & Automation Path', icon: '💻', color: '#0284c7',
+    desc: 'For engineers who want to become high-leverage digital engineers using analysis software, BIM, automation, data and AI-assisted workflows.',
+    outcomes: ['BIM structural modeller', 'Digital engineer', 'Automation engineer', 'Design systems builder'],
+    careerNote: 'Career map: Start with CAD, Excel and clean file control. Then connect ETABS/SAP/Revit/BIM coordination. Later automate repetitive calculations, reporting and model data workflows. This path is strongest when paired with Design Consultant or Site Coordination experience.',
+    phases: [
+      { id:'b1', label:'Phase 1', title:'Baseline digital tools', summary:'Become fast, organised and useful in common office tools.', modules:[
+        mod('b-cad','✏️','AutoCAD production drafting','Professional drawings, details and plotting.', ['Layer standards','Blocks','Annotations','Layouts and plotting'], ['Create a standard CAD template','Draft 5 RC details','Plot a complete drawing sheet'], ['Autodesk Learn','CADTutor','Office CAD standards']),
+        mod('b-excel','📊','Excel engineering sheets','Calculation templates and design automation basics.', ['Data validation','Lookup tables','Conditional warnings','Printable reports'], ['Build a calculation pack','Protect formulas','Create summary sheets'], ['ExcelJet','Chandoo','Engineering Excel examples']),
+        mod('b-file','🗂️','File, version and document control','Avoid chaos as project data grows.', ['Folder standards','Naming conventions','Revision control','Issue registers'], ['Create a folder template','Build a document register','Prepare issue transmittal format'], ['ISO document control basics','BIM naming standards','Project controls templates'])
+      ]},
+      { id:'b2', label:'Phase 2', title:'Analysis and BIM integration', summary:'Connect structural modelling, drawings and coordination.', modules:[
+        mod('b-etabs','🏛️','ETABS / SAP2000 / STAAD.Pro / ProtaStructure / STAAD.Pro workflow','Clean modelling, checks and reporting.', ['Model setup','Load combinations','Result extraction','Model audit'], ['Create a model QA checklist','Export forces to Excel','Compare reactions manually'], ['CSI knowledge base','ETABS tutorials','SAP2000 / STAAD.Pro guides']),
+        mod('b-revit','🏢','Revit structural modelling','Coordinated structural models and drawing extraction.', ['Families','Levels and grids','Model coordination','Sheet production'], ['Model a simple RC frame','Generate structural plans','Coordinate with architectural model'], ['Autodesk Revit Learn','BIM standards','Revit structural tutorials']),
+        mod('b-bim','🔄','BIM coordination','Clash detection, issue tracking and model review.', ['IFC awareness','Clash workflows','Model review meetings','Issue assignment'], ['Run a mock clash review','Create an issue register','Prepare a coordination report'], ['BIMForum LOD','ISO 19650 overview','Navisworks tutorials'])
+      ]},
+      { id:'b3', label:'Phase 3', title:'Automation and digital engineering', summary:'Use data and scripting to increase engineering leverage.', modules:[
+        mod('b-python','🐍','Python for engineering automation','Automate calculations, reports and repetitive checks.', ['Basic syntax','Pandas tables','File automation','Calculation scripts'], ['Automate a beam table','Generate a PDF-style summary','Clean model output data'], ['Automate the Boring Stuff','Python for engineers','Pandas docs']),
+        mod('b-ai','🤖','AI-assisted documentation','Use AI responsibly for drafts, checklists and explanation—not unchecked design approval.', ['Prompting for reports','Checklist generation','Assumption summaries','Review discipline'], ['Create a design basis template','Draft an RFI response','Build a calculation review checklist'], ['AI literacy guides','Engineering QA procedures','Prompt libraries']),
+        mod('b-digital-twin','🌐','Digital twin direction','Connect geometry, behaviour, inspection and lifecycle data.', ['Asset data','Sensors awareness','Lifecycle models','Data standards'], ['Map data for one bridge/building asset','Create an asset information table','Study one digital twin case'], ['Digital twin papers','ISO 19650','Infrastructure asset management guides'])
+      ]}
+    ]
+  },
+  {
+    id: 'career', short: 'Professional', label: 'Professional Standing & Career Mobility Path', icon: '🏅', color: '#1e40af',
+    desc: 'For engineers building registration evidence, international mobility, ethical judgement, portfolio strength and long-term independent practice readiness.',
+    outcomes: ['Registered engineer', 'Chartership candidate', 'Independent consultant', 'Recognised professional'],
+    careerNote: 'Career map: This is not a standalone technical route. Use it alongside Design, Site, Oil & Gas, Geotech, PM or Digital. It turns your work into proof through logbooks, portfolios, registration evidence, CV positioning and ethical judgement.',
+    phases: [
+      { id:'c1', label:'Milestone 1', title:'Evidence and ethics foundation', summary:'Document competence while building sound professional judgement.', modules:[
+        mod('c-log','📓','Professional logbook','Turn daily work into evidence.', ['Experience records','Mentor comments','Responsibility levels','Lessons learned'], ['Write weekly logs','Map work to competence areas','Save photos and sketches safely'], ['COREN/NSE guidance','ICE attributes framework','IStructE examples']),
+        mod('c-ethics','⚖️','Engineering ethics and responsibility','Know when to escalate, refuse or ask for review.', ['Duty of care','Design responsibility','Site safety escalation','Professional boundaries'], ['Write a personal engineering ethics checklist','Study 3 collapse case lessons','Practise risk escalation language'], ['COREN ethics guidance','IStructE ethics notes','Collapse case studies']),
+        mod('c-mentor','👥','Mentorship and review habit','Grow faster through responsible review.', ['Feedback requests','Technical review','Career conversations','Peer learning'], ['Find one senior reviewer','Ask for monthly feedback','Join a professional group'], ['NSE branches','LinkedIn engineering groups','Professional communities'])
+      ]},
+      { id:'c2', label:'Milestone 2', title:'Registration and credentials', summary:'Turn experience into formal recognition.', modules:[
+        mod('c-coren','🇳🇬','COREN registration pathway','Understand documentation, experience and lawful practice requirements.', ['Application requirements','Experience records','Referees','Professional interview awareness'], ['Create a COREN readiness folder','Map missing evidence','Schedule quarterly review'], ['COREN website guidance','NSE branch support','Senior engineer mentorship']),
+        mod('c-charter','🌍','International chartership awareness','ICE, IStructE or similar paths for global mobility.', ['Competence attributes','IPD records','Technical report writing','Professional review mindset'], ['Compare ICE and IStructE requirements','Write one competence example','Collect design responsibility evidence'], ['ICE membership guidance','IStructE membership guidance','Engineers Canada/Australia pathways']),
+        mod('c-cert','📜','Supporting certifications','Choose credentials that match your route, not random certificates.', ['PMP/CAPM','NEBOSH','BIM certificates','Software certificates'], ['Pick 1 certification for your track','Budget study time','Add portfolio evidence not only certificates'], ['PMI','NEBOSH','Autodesk/Bentley learning portals'])
+      ]},
+      { id:'c3', label:'Milestone 3', title:'Portfolio and career positioning', summary:'Become visible for the roles you want.', modules:[
+        mod('c-portfolio','🧾','Engineering portfolio','Proof of skill through models, drawings, calculations and site evidence.', ['Project summaries','Calculation excerpts','Model screenshots','Inspection photos with lessons'], ['Create a 6-page portfolio','Add one project per month','Remove confidential project data'], ['Portfolio examples','LinkedIn featured section','Graduate CV guides']),
+        mod('c-cv','🪪','CV and interview positioning','Speak the language of the role you want.', ['Role-specific CV','Achievement bullets','Technical vocabulary','Interview case stories'], ['Rewrite CV for one target track','Prepare 5 STAR stories','Practise explaining a model/design'], ['Engineering CV samples','LinkedIn profile guides','Interview prep resources']),
+        mod('c-consult','🏢','Independent practice readiness','Only after competence, registration, systems and accountability are in place.', ['Professional liability','QA systems','Fees and contracts','Scope control'], ['Draft a practice readiness checklist','Create design QA templates','Define services you can safely offer'], ['FIDIC client-consultant basics','Professional indemnity guidance','Small consultancy systems'])
+      ]}
+    ]
+  }
+];
+
+const MIND_GOALS = [
+  { key:'design', title:'Design Consultant', icon:'📐', desc:'Buildings, analysis, detailing, design review and future consulting leadership.' },
+  { key:'site', title:'Site / Construction Lead', icon:'🦺', desc:'Site control, QA/QC, coordination, contractors, packages and delivery leadership.' },
+  { key:'oilgas', title:'Oil & Gas / EPC Engineer', icon:'🛢️', desc:'Steel-heavy industrial structures, pipe racks, equipment supports, offshore awareness and HSE culture.' },
+  { key:'pm', title:'Project Manager', icon:'📊', desc:'Planning, cost, contracts, risk, stakeholders and delivery systems.' },
+  { key:'digital', title:'Digital / BIM Engineer', icon:'💻', desc:'CAD, BIM, model coordination, automation, data workflows and digital engineering systems.' },
+  { key:'career', title:'Professional / International Path', icon:'🏅', desc:'COREN/NSE evidence, chartership awareness, portfolio proof and independent practice readiness.' }
+];
+
+function countModules(track) { return track.phases.reduce((n,p)=>n+p.modules.length,0); }
+function totalModules() { return TRACKS.reduce((n,t)=>n+countModules(t),0); }
+function doneCount() { return Object.values(done).filter(Boolean).length; }
+function saveDone() { localStorage.setItem(STORAGE_KEY, JSON.stringify(done)); updateProgress(); }
+function updateProgress() { document.getElementById('progress-pill').textContent = `${doneCount()} / ${totalModules()} done`; }
+
+function buildTrackBar() {
+  const bar = document.getElementById('track-bar');
+  bar.innerHTML = `<button class="track-btn active" data-panel="home" onclick="switchPanel('home')"><span class="track-dot" style="background:var(--blue)"></span> Career map</button>` +
+    TRACKS.map(t => `<button class="track-btn" data-panel="${t.id}" onclick="switchPanel('${t.id}')"><span class="track-dot" style="background:${t.color}"></span>${t.short}</button>`).join('');
+}
+
+function buildHome() {
+  const panel = document.getElementById('panel-home');
+  panel.innerHTML = `
+    <section class="intro-shell" aria-label="StructPath introduction">
+      <div class="intro-content">
+        <div class="intro-pill">🧭 Structural Engineering Career Maps</div>
+        <h1><span>StructPath</span><br>career roadmaps</h1>
+        <p class="intro-lead">StructPath is a structured career mapping tool built for civil and structural engineers. Instead of only listing courses or software to learn, it shows the full journey from your current level to the role you want to become.</p>
+        <p class="intro-support">Each path is designed as a connected career map — starting from core fundamentals and leading into real engineering roles such as design consultant, site engineer, oil & gas engineer, project manager, geotechnical specialist, or digital/BIM engineer.</p>
+        <div class="intro-actions">
+          <button class="intro-btn primary" onclick="document.getElementById('career-map-start').scrollIntoView({behavior:'smooth', block:'start'})">Explore career map →</button>
+          <button class="intro-btn" onclick="window.location.href='assessment.html'">Take assessment</button>
+        </div>
+      </div>
+      <div class="intro-highlight">
+        <div class="intro-card"><strong>Career-first</strong><span>Start with who you want to become, not random course lists.</span></div>
+        <div class="intro-card"><strong>Connected maps</strong><span>See how Design, Site, PM, Oil & Gas, BIM and Geotech connect.</span></div>
+        <div class="intro-card"><strong>Practical actions</strong><span>Each path includes real tasks, tools, exposure and portfolio evidence.</span></div>
+        <div class="intro-card"><strong>Built with Jay</strong><span>A clear engineering growth system for early and developing engineers.</span></div>
+      </div>
+    </section>
+
+    <div class="hero" id="career-map-start">
+      <div class="eyebrow">Career map focus</div>
+      <h1>Choose the engineer you want to become.<br><em>Then follow the connected route.</em></h1>
+      <p>You don’t just learn topics here — you understand what to learn, when to learn it, where to apply it, and how different career paths connect over time.</p>
+    </div>
+
+    <section class="mind-map-wrap" aria-label="Career mind map">
+      <div class="mind-map-heading">
+        <h2>Start from the end goal, not just the course list.</h2>
+        <p>Every route still includes core learning, but the main experience is career-led: what to become, what to master, where to gain exposure, and how to branch later.</p>
+      </div>
+      <div class="mind-map">
+        <button class="mind-node core" onclick="switchPanel('foundation')">
+          <span class="mind-icon">🧭</span>
+          <span class="mind-title">Foundation Core</span>
+          <span class="mind-desc">Mechanics, materials, drawings, RC/steel basics, site literacy and evidence habits.</span>
+          <span class="mind-meta">Start here</span>
+        </button>
+        ${MIND_GOALS.map(goal => `<button class="mind-node ${goal.key}" onclick="switchPanel('${goal.key}')">
+          <span class="mind-icon">${goal.icon}</span>
+          <span class="mind-title">${goal.title}</span>
+          <span class="mind-desc">${goal.desc}</span>
+          <span class="mind-meta">Open roadmap →</span>
+        </button>`).join('')}
+      </div>
+    </section>
+
+    <section class="route-bridge">
+      <div class="bridge-card"><h3>1. Pick your destination</h3><p>Begin with Design Consultant, Project Manager, Oil & Gas, Digital/BIM or another clear end goal.</p></div>
+      <div class="bridge-card"><h3>2. Follow the years</h3><p>Use each path phase as a career timeline: first exposure, first responsibility, then advanced proof.</p></div>
+      <div class="bridge-card"><h3>3. Branch intentionally</h3><p>Each route can connect into another path, such as Design → PM, Site → PM, or Design/Steel → Oil & Gas.</p></div>
+    </section>
+
+    <div class="notice">
+      <div class="notice-icon">🧠</div>
+      <div><h3>How to use it</h3><p>Start with Foundation Core if you are unsure. Otherwise, click your end goal in the mind map. Open each phase, complete the practical actions, and mark modules done as you build evidence.</p></div>
+    </div>
+
+    <div class="track-grid">
+      ${TRACKS.map(t => `<article class="track-card" onclick="switchPanel('${t.id}')">
+        <div class="card-icon">${t.icon}</div>
+        <div class="card-title" style="color:${t.color}">${t.label}</div>
+        <div class="card-desc">${t.desc}</div>
+        <div class="card-meta">${countModules(t)} modules · ${t.phases.length} phases</div>
+      </article>`).join('')}
+    </div>
+    <p class="footer-note">Important: this roadmap supports structured career development. It does not replace supervision by a competent engineer, project-specific design verification, licensed review, local code requirements or professional judgement.</p>
+  `;
+}
+
+function buildTrackPanels() {
+  const canvas = document.getElementById('canvas');
+  TRACKS.forEach(track => {
+    const section = document.createElement('section');
+    section.id = 'panel-' + track.id;
+    section.className = 'panel';
+    section.innerHTML = renderTrack(track);
+    canvas.appendChild(section);
+  });
+}
+
+function renderTrack(track) {
+  return `
+    <div class="track-header">
+      <div class="track-badge" style="color:${track.color};background:${track.color}14;border-color:${track.color}33">${track.icon} ${track.short}</div>
+      <h2 class="track-title">${track.label}</h2>
+      <p class="track-desc">${track.desc}</p>
+      <div class="track-outcomes">${track.outcomes.map(o=>`<span class="outcome-chip">${o}</span>`).join('')}</div>
+      <div class="actions"><button class="btn primary" onclick="openFirstPhase('${track.id}')">Open first phase</button><button class="btn" onclick="expandAll('${track.id}')">Expand all</button><button class="btn" onclick="collapseAll('${track.id}')">Collapse all</button></div>
+    </div>
+    ${renderRoadmapFlow(track)}
+    ${track.careerNote ? `<div class="career-map-note"><strong>Career roadmap:</strong> ${track.careerNote}</div>` : ''}
+    ${track.phases.map((phase, i) => renderPhase(track, phase, i === 0)).join('')}
+    <p class="footer-note">Engineering caution: treat this as a learning roadmap, not design approval. Real projects still require competent supervision, code checks, peer review and local authority compliance.</p>
+  `;
+}
+
+function getFlowData(track) {
+  const map = {
+    foundation: {
+      spine: ['Engineering Fundamentals','Materials Behaviour','Drawing Literacy','RC + Steel Basics','Site Awareness','Excel + Logbook'],
+      left: ['Statics','Load Path','Concrete','Rebar Detailing','Soil Reports'],
+      right: ['AutoCAD','Calculation Sheets','RFIs','Site Photos','COREN Evidence'],
+      note: 'Use this as the common stem. Every other route branches from these fundamentals.'
+    },
+    design: {
+      spine: ['Design Trainee','Load Takedown','RC Building Systems','ETABS / SAP2000 / STAAD.Pro / ProtaStructure / STAAD.Pro2000 / ProtaStructure Verification','Detailing + BBS','Design Lead'],
+      left: ['Residential Buildings','2–5 Storey Frames','Flat Slabs','Stairs + Foundations','Design Basis Reports'],
+      right: ['Small Consulting Firms','Medium Design Offices','High-rise Exposure','Peer Review','Own Consultancy'],
+      note: 'Best early exposure: residential and light commercial buildings first, then medium-rise and complex systems.'
+    },
+    site: {
+      spine: ['Site Trainee','Inspection Control','QA/QC Records','RFI + Drawing Control','Programme Control','Project Engineer'],
+      left: ['Rebar Checks','Formwork','Concrete Pour','Setting Out','Temporary Works'],
+      right: ['Contractors','Resident Engineer Teams','Subcontractors','Package Control','Handover'],
+      note: 'This route becomes powerful when daily site evidence is combined with planning and contract awareness.'
+    },
+    oilgas: {
+      spine: ['Steel Foundation','Industrial Loads','Pipe Racks','STAAD.Pro','Specs + HSE','EPC / Offshore'],
+      left: ['Base Plates','Equipment Supports','Access Platforms','Grating + Handrails','Fabrication Drawings'],
+      right: ['EPC Firms','Fabrication Yards','Oil Servicing','Refinery / LNG','FPSO Modules'],
+      note: 'Start with steel depth and a mini portfolio: pipe rack, equipment support and access platform.'
+    },
+    geotech: {
+      spine: ['Soil Mechanics','Site Investigation','Groundwater Risk','Shallow Foundations','Piles','Ground Specialist'],
+      left: ['SPT / CPT','Borehole Logs','Settlement','Bearing Capacity','Retaining Walls'],
+      right: ['SI Firms','Foundation Design','Basements','Reclamation','Failure Review'],
+      note: 'The key career skill is reading uncertainty in the ground and communicating risk clearly.'
+    },
+    pm: {
+      spine: ['Technical Base','Reports + Records','Planning','Cost Control','Contracts','Project Manager'],
+      left: ['Daily Reports','Lookahead Plans','BOQ','Payment Backup','Risk Register'],
+      right: ['Contractor Route','Planning Engineer','Contracts Engineer','Claims Support','Construction Director'],
+      note: 'Do not skip technical/site credibility. Strong PMs understand what drawings, labour and sequence mean on site.'
+    },
+    digital: {
+      spine: ['CAD + Excel','Model Discipline','ETABS / SAP2000 / STAAD.Pro / ProtaStructure / STAAD.Pro','Revit / BIM','Automation','Digital Engineer'],
+      left: ['Drawing Templates','Calculation Packs','Model QA','Clash Reports','Python Scripts'],
+      right: ['Design Office','BIM Team','Contractor Coordination','Data Workflows','AI-Assisted QA'],
+      note: 'This is strongest when paired with real design or site experience, not used as software skill alone.'
+    },
+    career: {
+      spine: ['Logbook','Ethics','Mentorship','COREN / NSE','Portfolio','Professional Visibility'],
+      left: ['Weekly Evidence','Project Photos','Lessons Learned','Competence Mapping','CV Proof'],
+      right: ['Senior Review','Registration','Chartership Awareness','Independent Practice','Mentoring Others'],
+      note: 'Use this alongside your main technical route. It turns experience into recognised professional evidence.'
+    }
+  };
+  return map[track.id] || map.foundation;
+}
+
+function renderRoadmapFlow(track) {
+  const flow = getFlowData(track);
+  return `
+    <section class="roadmap-flow" aria-label="${track.short} visual roadmap">
+      <div class="flow-title">
+        <h3>${track.icon} ${track.short} visual roadmap</h3>
+        <span>Click modules below for details</span>
+      </div>
+      <div class="flow-canvas">
+        <div class="flow-left">
+          <div class="flow-note-box"><strong>What to practise:</strong><br>${flow.note}</div>
+          ${flow.left.map(item => `<div class="flow-branch-node">${item}<small>skill / exposure</small></div>`).join('')}
+        </div>
+        <div class="flow-spine">
+          ${flow.spine.map((item, index) => `<div class="flow-main-node">${item}<small>${index === 0 ? 'start' : index === flow.spine.length - 1 ? 'target' : 'step ' + index}</small></div>`).join('')}
+        </div>
+        <div class="flow-right">
+          ${flow.right.map(item => `<div class="flow-branch-node">${item}<small>role / company exposure</small></div>`).join('')}
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+function renderPhase(track, phase, open) {
+  return `<section class="phase ${open ? 'open' : ''}" id="phase-${track.id}-${phase.id}" data-track="${track.id}">
+    <button class="phase-head" onclick="togglePhase(this)">
+      <span class="chev">›</span>
+      <span><span class="phase-kicker">${phase.label}</span><div class="phase-name">${phase.title}</div><div class="phase-summary">${phase.summary}</div></span>
+      <span class="phase-count">${phase.modules.length} modules</span>
+    </button>
+    <div class="phase-body">
+      <div class="module-list">
+        ${phase.modules.map(m => renderModule(track, m)).join('')}
+      </div>
+      ${phase.note ? `<div class="route-note">${phase.note}</div>` : ''}
+    </div>
+  </section>`;
+}
+
+function renderModule(track, m) {
+  const isDone = !!done[m.id];
+  return `<article class="module ${isDone ? 'done' : ''}" id="module-${m.id}">
+    <button class="module-head" onclick="toggleModule(event, '${m.id}')">
+      <span class="module-icon">${m.icon}</span>
+      <span><span class="module-title">${m.title}</span><span class="module-sub">${m.sub}</span></span>
+      <span class="phase-count">details</span>
+      <span class="done-btn" onclick="toggleDone(event, '${m.id}')">${isDone ? '✓' : ''}</span>
+    </button>
+    <div class="module-body">
+      <div class="detail-grid">
+        <div class="detail"><h4>Skills to build</h4><ul class="clean">${m.skills.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+        <div class="detail"><h4>Practical actions</h4><ul class="clean">${m.actions.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+        <div class="detail"><h4>Resources</h4><ul class="clean">${m.resources.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+      </div>
+    </div>
+  </article>`;
+}
+
+function buildSidebar(panelId = 'home') {
+  const sidebar = document.getElementById('sidebar-links');
+  if (panelId === 'home') {
+    sidebar.innerHTML = TRACKS.map(t => `<button class="side-link" onclick="switchPanel('${t.id}')"><span>${t.icon} ${t.short}</span><span class="side-count">${countModules(t)}</span></button>`).join('');
+    return;
+  }
+  const track = TRACKS.find(t => t.id === panelId);
+  if (!track) return;
+  sidebar.innerHTML = track.phases.map(p => `<button class="side-link" onclick="document.getElementById('phase-${track.id}-${p.id}').scrollIntoView({behavior:'smooth', block:'start'})"><span>${p.label} · ${p.title}</span><span class="side-count">${p.modules.length}</span></button>`).join('');
+}
+
+function switchPanel(id) {
+  // ensure assessment navigation compatibility
+  if(id === 'assessment'){
+    window.location.href = 'assessment.html';
+    return;
+  }
+  currentPanel = id;
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  const target = document.getElementById('panel-' + id);
+  if (!target) return;
+  target.classList.add('active');
+  document.querySelectorAll('.track-btn').forEach(b => b.classList.toggle('active', b.dataset.panel === id));
+  buildSidebar(id);
+  if (id === 'home') {
+    history.replaceState(null, '', window.location.pathname);
+  } else {
+    history.replaceState(null, '', '#' + id);
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function togglePhase(button) {
+  const phase = button.closest('.phase');
+  const trackId = phase.dataset.track;
+  document.querySelectorAll(`.phase[data-track="${trackId}"]`).forEach(p => { if (p !== phase) p.classList.remove('open'); });
+  phase.classList.toggle('open');
+}
+
+function toggleModule(event, id) {
+  if (event.target.classList.contains('done-btn')) return;
+  const module = document.getElementById('module-' + id);
+  const phase = module.closest('.phase');
+  phase.querySelectorAll('.module').forEach(m => { if (m !== module) m.classList.remove('open'); });
+  module.classList.toggle('open');
+}
+
+function toggleDone(event, id) {
+  event.stopPropagation();
+  done[id] = !done[id];
+  const module = document.getElementById('module-' + id);
+  const btn = module.querySelector('.done-btn');
+  module.classList.toggle('done', done[id]);
+  btn.textContent = done[id] ? '✓' : '';
+  if (!done[id]) delete done[id];
+  saveDone();
+}
+
+function openFirstPhase(trackId) {
+  collapseAll(trackId);
+  const first = document.querySelector(`.phase[data-track="${trackId}"]`);
+  if (first) first.classList.add('open');
+}
+function expandAll(trackId) { document.querySelectorAll(`.phase[data-track="${trackId}"]`).forEach(p => p.classList.add('open')); }
+function collapseAll(trackId) { document.querySelectorAll(`.phase[data-track="${trackId}"]`).forEach(p => p.classList.remove('open')); }
+
+buildTrackBar();
+buildHome();
+buildTrackPanels();
+buildSidebar('home');
+updateProgress();
+
+const initialTrack = window.location.hash.replace('#', '');
+if (initialTrack && TRACKS.some(t => t.id === initialTrack)) {
+  switchPanel(initialTrack);
+}
+</script>
+</body>
+</html>
